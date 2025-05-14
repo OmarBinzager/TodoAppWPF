@@ -1,0 +1,183 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <FontFamily x:Key="Inter">Inter</FontFamily>
+    <!--<FontFamily x:Key="MontserratRegular">pack://application:,,,Fonts/#Montserrat/Montserrat-Regular.ttf</FontFamily>
+    <FontFamily x:Key="InterMedium">pack://application:,,,Fonts/Inter/#Inter_18pt-Medium.ttf</FontFamily>-->
+    <FontFamily x:Key="Montserrat">Montserrat</FontFamily>
+    <!--<FontFamily x:Key="InterBold">pack://application:,,,Fonts/Inter/#Inter_18pt-Bold.ttf</FontFamily>
+    <FontFamily x:Key="MontserratBold">pack://application:,,,Fonts/#Montserrat/Montserrat-Bold.ttf</FontFamily>-->
+    <Style TargetType="TextBlock" x:Key="header">
+        <Setter Property="FontSize" Value="32"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="searchBar">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{DynamicResource lightFont}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Montserrat}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterMedium16">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MontsMedium15">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Montserrat}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterRegular10">
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterRegular12">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterSemiBold16">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterBold16">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterSemiBold12">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterMedium15">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MontsSemiBold14">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Montserrat}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterMedium14">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MontsMedium14">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Montserrat}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MontsMedium13">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Montserrat}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterRegular14">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MontsMedium16">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Montserrat}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MontsSemiBold12">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterMedium10">
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterSemiBold24">
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterMedium20">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterSemiBold15">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterSemiBold14">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MontsRegular13">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Montserrat}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterMedium12">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MontsSemiBold16">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Montserrat}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MontsSemiBold15">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Montserrat}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterRegular13">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterSemiBold20">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterRegular15">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MontsBold36">
+        <Setter Property="FontSize" Value="36"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Montserrat}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterMedium36">
+        <Setter Property="FontSize" Value="36"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="InterRegular16">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+    </Style>
+    <!--<Style TargetType="TextBlock" x:Key="">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>-->
+
+</ResourceDictionary>

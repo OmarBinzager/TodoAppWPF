@@ -1,0 +1,173 @@
+﻿<UserControl x:Class="ToDoProject.View.Dialogs.TaskDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:ToDoProject.ViewModel"
+             xmlns:components="clr-namespace:ToDoProject.View.Components"
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="1600">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".3*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width=".3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".2*"/>
+            <RowDefinition/>
+            <RowDefinition Height=".2*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="Black" Opacity=".5" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+
+        <Border Grid.Column="1" Grid.Row="1" Background="{StaticResource dialogBackground}" Padding="60,40" CornerRadius="14">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="65"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource MontsSemiBold16}" HorizontalAlignment="Left" Text="{Binding DialogTitle}" Margin="0,0,0,2"/>
+                        <Border Width="60" HorizontalAlignment="Left" Height="2" Background="{StaticResource orangeColor}" CornerRadius="1"/>
+                    </StackPanel>
+                    <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding CloseDialogCommand}" Width="25" Height="25" Style="{StaticResource closeButton}">
+                        M10.9393 12L6.9696 15.9697L8.03026 17.0304L12 13.0607L15.9697 17.0304L17.0304 15.9697L13.0607 12L17.0303 8.03039L15.9696 6.96973L12 10.9393L8.03038 6.96973L6.96972 8.03039L10.9393 12Z
+                    </Button>
+                </Grid>
+                <Border BorderBrush="{StaticResource secondIconColor}" BorderThickness="1" Grid.Row="1" Padding="14">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="36"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <components:TitledTextBox Height="64" TextTitle="Task Title" Text="{Binding Title, Mode=TwoWay}" Hint="Type your task title" Margin="0,0,0, 16"/>
+                                <TextBlock Text="Due Date" Margin="0,0,0,9" Style="{StaticResource MontsSemiBold14}"/>
+                                <components:DatePicker SelectedDate="{Binding DueDate, Mode=TwoWay}"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,16,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="Priority" Margin="0,0,16,0" VerticalAlignment="Center" Style="{StaticResource MontsSemiBold14}"/>
+                                    <ComboBox Style="{StaticResource ComboBoxTheme}" SelectedItem="{Binding Priority, Mode=TwoWay}" ItemsSource="{Binding Priorities, Mode=TwoWay}" SelectedValuePath="Id" SelectedIndex="0">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <!-- Display the Color as a rectangle -->
+                                                    <Ellipse Width="10" Height="10" Fill="{Binding Color, Mode=TwoWay}" Margin="0,0,10,0"/>
+                                                    <!-- Display the Name -->
+                                                    <TextBlock Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <Border Width="30"/>
+                                    <TextBlock Text="Category" Margin="0,0,16,0" VerticalAlignment="Center" Style="{StaticResource MontsSemiBold14}"/>
+                                    <ComboBox Style="{StaticResource ComboBoxTheme}" SelectedItem="{Binding Category, Mode=TwoWay}" ItemsSource="{Binding Categories, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="Name" SelectedIndex="0"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Upload Image" Margin="0,0,0,10" VerticalAlignment="Center" Style="{StaticResource MontsSemiBold14}"/>
+                                    <CheckBox IsChecked="{Binding IsImageSelected}" Style="{StaticResource PictureSelected}" Grid.Column="2"/>
+                                </Grid>
+                                <Border Style="{StaticResource bordedContainer}" Background="Transparent" CornerRadius="6" Padding="39 21">
+                                    <Grid AllowDrop="True" Background="Transparent">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition />
+                                            <RowDefinition Height="10"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <behaviors:Interaction.Triggers>
+                                        <behaviors:EventTrigger EventName="Drop">
+                                            <behaviors:InvokeCommandAction Command="{Binding ImageDropedCommand}" PassEventArgsToCommand="True"/>
+                                        </behaviors:EventTrigger>
+                                        </behaviors:Interaction.Triggers>
+                                        <Canvas Width="64" Height="56">
+                                            <Path StrokeEndLineCap="Round" StrokeStartLineCap="Round" StrokeLineJoin="Round" StrokeThickness="1.5" Stroke="{StaticResource secondIconColor}" Data="M63.25 31.2125V17.1047C63.25 12.9473 61.4774 8.96022 58.3223 6.02052C55.1671 3.08083 50.8878 1.42932 46.4257 1.42932H17.8243C13.3622 1.42932 9.0829 3.08083 5.92773 6.02052C2.77256 8.96022 1 12.9473 1 17.1047V39.0501C1 41.1087 1.43517 43.147 2.28068 45.0488C3.12618 46.9507 4.36545 48.6787 5.92773 50.1343C9.0829 53.074 13.3622 54.7255 17.8243 54.7255H38.8884"/>
+                                            <Path StrokeEndLineCap="Round" StrokeStartLineCap="Round" StrokeLineJoin="Round" StrokeThickness="1.5" Stroke="{StaticResource secondIconColor}" Data="M1.875 43.7527L11.0947 33.7205C12.3055 32.6001 13.8947 31.9038 15.5931 31.7496C17.2916 31.5953 18.9952 31.9926 20.4154 32.8741C21.8357 33.7556 23.5392 34.1528 25.2377 33.9985C26.9361 33.8443 28.5253 33.148 29.7361 32.0276L37.5762 24.7229C39.829 22.6168 42.8116 21.3251 45.9919 21.0782C49.1721 20.8313 52.3431 21.6452 54.9389 23.3748L63.2501 29.3628M18.6993 22.3402C19.4328 22.3361 20.1583 22.1974 20.8343 21.9321C21.5103 21.6667 22.1236 21.2799 22.6391 20.7938C23.1547 20.3076 23.5624 19.7316 23.839 19.0986C24.1157 18.4656 24.2558 17.7881 24.2514 17.1047C24.2469 16.4212 24.0981 15.7453 23.8133 15.1155C23.5285 14.4857 23.1134 13.9143 22.5916 13.4339C22.0697 12.9536 21.4515 12.5737 20.7721 12.3159C20.0928 12.0582 19.3655 11.9277 18.632 11.9318C17.1506 11.9401 15.7334 12.4964 14.6922 13.4782C13.651 14.4601 13.0711 15.7871 13.08 17.1674C13.0889 18.5476 13.686 19.868 14.7398 20.8381C15.7936 21.8082 17.2179 22.3485 18.6993 22.3402Z"/>
+                                            <Path StrokeEndLineCap="Round" StrokeStartLineCap="Round" StrokeMiterLimit="10" StrokeThickness="1.5" Stroke="{StaticResource secondIconColor}" Data="M54.6934 37.4825V53.1579"/>
+                                            <Path StrokeEndLineCap="Round" StrokeStartLineCap="Round" StrokeLineJoin="Round" StrokeThickness="1.5" Stroke="{StaticResource secondIconColor}" Data="M62.4086 44.0819L55.7899 37.9152C55.6465 37.7798 55.4757 37.6723 55.2874 37.599C55.0991 37.5256 54.897 37.4879 54.6929 37.4879C54.4888 37.4879 54.2868 37.5256 54.0985 37.599C53.9101 37.6723 53.7393 37.7798 53.596 37.9152L46.9773 44.0819"/>
+                                        </Canvas>
+                                        <TextBlock Grid.Row="2" LineHeight="20" Text="Drag&#38;Drop files here&#x0a;or" TextAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MontsRegular13}" Foreground="{StaticResource secondIconColor}"/>
+                                        <Button Command="{Binding ChooseImageCommand}" HorizontalAlignment="Center" Grid.Row="4" Padding="10,6">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Border Padding="{TemplateBinding Padding}" BorderBrush="{StaticResource secondIconColor}" BorderThickness="1" CornerRadius="6" Background="Transparent">
+                                                        <TextBlock Foreground="{StaticResource secondIconColor}" Style="{StaticResource MontsMedium13}" Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                            Browse
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.6*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <components:TitledTextBox Grid.Row="1" TextTitle="Task Description" Text="{Binding Description, Mode=TwoWay}" Hint="Start writing here..."/>
+                            <Grid Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="16"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Steps" Style="{StaticResource MontsSemiBold14}"/>
+                                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                                    <ItemsControl ItemsSource="{Binding Steps, Mode=TwoWay}" ScrollViewer.CanContentScroll="True">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid x:Name="stepsContainer" Margin="0 0 0 5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding Index, Mode=TwoWay}" Foreground="{StaticResource secondIconColor}" Style="{StaticResource InterMedium14}" Width="20" VerticalAlignment="Center"/>
+                                                    <components:CustomTextBox Grid.Column="1" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                        <behaviors:Interaction.Triggers>
+                                                            <behaviors:EventTrigger EventName="TextChanged">
+                                                                <behaviors:InvokeCommandAction Command="{Binding DataContext.StepTextChangedCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                               CommandParameter="{Binding .}" />
+                                                            </behaviors:EventTrigger>
+                                                        </behaviors:Interaction.Triggers>
+                                                    </components:CustomTextBox>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Button Margin="10,0,0,0" Command="{Binding SaveCommand}" Style="{StaticResource ActionButton}" Grid.Row="2" Content="Done" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--FF6767-->
+    <SolidColorBrush x:Key="primaryColor">#FF6767</SolidColorBrush>
+    <Color x:Key="primary">#FF6767</Color>
+    <SolidColorBrush x:Key="secondaryColor">#FFFFFF</SolidColorBrush>
+    <Color x:Key="secondary">#FFFFFF</Color>
+    <SolidColorBrush x:Key="headerBackground">#F8F8F8</SolidColorBrush>
+    <SolidColorBrush x:Key="iconColor">#FFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="secondIconColor">#A1A3AB</SolidColorBrush>
+    <Color x:Key="secondIcon">#A1A3AB</Color>
+    <SolidColorBrush x:Key="lightFont">#A1A3AB</SolidColorBrush>
+    <SolidColorBrush x:Key="mainBackground">#F5F8FF</SolidColorBrush>
+    <SolidColorBrush x:Key="dialogBackground">#f9f9f9</SolidColorBrush>
+    <Color x:Key="mainBackgroundColor">#F5F8FF</Color>
+    <SolidColorBrush x:Key="black">#000000</SolidColorBrush>
+    <SolidColorBrush x:Key="lightBlue">#3ABEFF</SolidColorBrush>
+    <SolidColorBrush x:Key="orangeColor">#F24E1E</SolidColorBrush>
+    <Color x:Key="orange">#F24E1E</Color>
+    <Color x:Key="red">Red</Color>
+    <SolidColorBrush x:Key="lightText" >#747474</SolidColorBrush>
+    <SolidColorBrush x:Key="CalendarBackgroundColor" >#F5F8FF</SolidColorBrush>
+    <SolidColorBrush x:Key="authIconColor" >#212427</SolidColorBrush>
+    <SolidColorBrush x:Key="hintFontColor" >#999</SolidColorBrush>
+    <SolidColorBrush x:Key="linkTextColor" >#008BD9</SolidColorBrush>
+    
+
+    <SolidColorBrush x:Key="navItem">#FF9090</SolidColorBrush>
+
+</ResourceDictionary>

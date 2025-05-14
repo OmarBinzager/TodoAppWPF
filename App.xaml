@@ -1,0 +1,41 @@
+﻿<Application x:Class="ToDoProject.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ToDoProject"
+             xmlns:converter="clr-namespace:ToDoProject.Constant.Converters"
+             >
+             <!--StartupUri="View/AuthView.xaml"-->
+    <Application.Resources>
+        <ResourceDictionary>
+            <ControlTemplate x:Key="NoErrorTemplate">
+                <DockPanel />
+            </ControlTemplate>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary>
+                    <converter:IndexConverter x:Key="IndexConverter"/>
+                </ResourceDictionary>-->
+                <ResourceDictionary>
+                    <converter:IndexMultiConverter x:Key="IndexMultiConverter"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <converter:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <converter:DragEventArgsConverter x:Key="DragEventArgsConverter"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <converter:StringToImageSourceConverter x:Key="StringToImageSourceConverter"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <converter:BoolToVisibilityConverter x:Key="boolToVisibility"/>
+                </ResourceDictionary>
+                <ResourceDictionary Source="Constant/Colors.xaml"/>
+                <ResourceDictionary Source="Constant/TextStyles.xaml"/>
+                <ResourceDictionary Source="Constant/GlobalStyles.xaml"/>
+                <ResourceDictionary Source="Constant/Icons.xaml"/>
+                <ResourceDictionary Source="Themes/Generic.xaml"/>
+                <!--<ResourceDictionary Source="/SharpVectors.Converters.wpf;component/Themes/Default.xaml"/>-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

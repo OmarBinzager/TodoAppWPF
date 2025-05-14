@@ -1,0 +1,324 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\view\\tasks.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:view\\tasks.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\view\\dashboard.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:view\\dashboard.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\view\\settings.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:view\\settings.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\viewmodel\\tasksviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:viewmodel\\tasksviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\viewmodel\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:viewmodel\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\viewmodel\\taskdialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:viewmodel\\taskdialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\viewmodel\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:viewmodel\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\viewmodel\\categoriesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:viewmodel\\categoriesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\view\\dialogs\\taskdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:view\\dialogs\\taskdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\constant\\converters\\stringtovisibilityconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:constant\\converters\\stringtovisibilityconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\view\\registerview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:view\\registerview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\viewmodel\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:viewmodel\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\viewmodel\\registerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:viewmodel\\registerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\view\\loginview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:view\\loginview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\viewmodel\\categorydialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:viewmodel\\categorydialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|c:\\users\\dev.omarbinzager\\source\\repos\\todoproject\\view\\categories.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{175DEA55-2D54-41F8-9DF4-62501169449B}|ToDoProject.csproj|solutionrelative:view\\categories.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\packages\\ModernWpfUI.0.8.3\\readme.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:packages\\ModernWpfUI.0.8.3\\readme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 9,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DashboardViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\DashboardViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\DashboardViewModel.cs",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\DashboardViewModel.cs",
+              "RelativeToolTip": "ViewModel\\DashboardViewModel.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAowKcAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T02:53:18.481Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Dashboard.xaml",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\Dashboard.xaml",
+              "RelativeDocumentMoniker": "View\\Dashboard.xaml",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\Dashboard.xaml",
+              "RelativeToolTip": "View\\Dashboard.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-12T02:47:06.651Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TaskDialogViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\TaskDialogViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\TaskDialogViewModel.cs",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\TaskDialogViewModel.cs",
+              "RelativeToolTip": "ViewModel\\TaskDialogViewModel.cs",
+              "ViewState": "AgIAAAABAAAAAAAAAAAMwBIBAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T03:43:19.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TaskDialog.xaml",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\Dialogs\\TaskDialog.xaml",
+              "RelativeDocumentMoniker": "View\\Dialogs\\TaskDialog.xaml",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\Dialogs\\TaskDialog.xaml",
+              "RelativeToolTip": "View\\Dialogs\\TaskDialog.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-12T03:42:55.251Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "CategoryDialogViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\CategoryDialogViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\CategoryDialogViewModel.cs",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\CategoryDialogViewModel.cs",
+              "RelativeToolTip": "ViewModel\\CategoryDialogViewModel.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACUAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T03:08:38.554Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Categories.xaml",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\Categories.xaml",
+              "RelativeDocumentMoniker": "View\\Categories.xaml",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\Categories.xaml",
+              "RelativeToolTip": "View\\Categories.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-12T03:06:28.763Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TasksViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\TasksViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\TasksViewModel.cs",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\TasksViewModel.cs",
+              "RelativeToolTip": "ViewModel\\TasksViewModel.cs",
+              "ViewState": "AgIAAJgAAAAAAAAAAIAxwLMAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T03:02:51.269Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Tasks.xaml",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\Tasks.xaml",
+              "RelativeDocumentMoniker": "View\\Tasks.xaml",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\Tasks.xaml",
+              "RelativeToolTip": "View\\Tasks.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-12T03:00:03.998Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Settings.xaml",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\Settings.xaml",
+              "RelativeDocumentMoniker": "View\\Settings.xaml",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\Settings.xaml",
+              "RelativeToolTip": "View\\Settings.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-12T03:55:18.014Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MainViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\MainViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\MainViewModel.cs",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\MainViewModel.cs",
+              "RelativeToolTip": "ViewModel\\MainViewModel.cs",
+              "ViewState": "AgIAACABAAAAAAAAAAAwwCwBAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T03:45:29.683Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CategoriesViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\CategoriesViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\CategoriesViewModel.cs",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\CategoriesViewModel.cs",
+              "RelativeToolTip": "ViewModel\\CategoriesViewModel.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T03:45:05.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "StringToVisibilityConverter.cs",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\Constant\\Converters\\StringToVisibilityConverter.cs",
+              "RelativeDocumentMoniker": "Constant\\Converters\\StringToVisibilityConverter.cs",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\Constant\\Converters\\StringToVisibilityConverter.cs",
+              "RelativeToolTip": "Constant\\Converters\\StringToVisibilityConverter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T03:21:37.481Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\App.xaml",
+              "RelativeDocumentMoniker": "App.xaml",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\App.xaml",
+              "RelativeToolTip": "App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-12T03:22:03.962Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LoginView.xaml",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\LoginView.xaml",
+              "RelativeDocumentMoniker": "View\\LoginView.xaml",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\LoginView.xaml",
+              "RelativeToolTip": "View\\LoginView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-12T03:11:20.743Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "LoginViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\LoginViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\LoginViewModel.cs",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\LoginViewModel.cs",
+              "RelativeToolTip": "ViewModel\\LoginViewModel.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAAwC0AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T03:13:13.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RegisterView.xaml",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\RegisterView.xaml",
+              "RelativeDocumentMoniker": "View\\RegisterView.xaml",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\View\\RegisterView.xaml",
+              "RelativeToolTip": "View\\RegisterView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-12T03:16:44.476Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "RegisterViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\RegisterViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\RegisterViewModel.cs",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ViewModel\\RegisterViewModel.cs",
+              "RelativeToolTip": "ViewModel\\RegisterViewModel.cs",
+              "ViewState": "AgIAAM8AAAAAAAAAAAAcwOQAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T03:15:25.712Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "readme.txt",
+              "DocumentMoniker": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\packages\\ModernWpfUI.0.8.3\\readme.txt",
+              "RelativeDocumentMoniker": "packages\\ModernWpfUI.0.8.3\\readme.txt",
+              "ToolTip": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\packages\\ModernWpfUI.0.8.3\\readme.txt",
+              "RelativeToolTip": "packages\\ModernWpfUI.0.8.3\\readme.txt",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-05-12T02:24:58.864Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

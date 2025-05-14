@@ -1,0 +1,255 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ToDoProject.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ToDoProject.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ToDoProject.csproj",
+        "projectName": "ToDoProject",
+        "projectPath": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\ToDoProject.csproj",
+        "packagesPath": "C:\\Users\\Dev.OmarBinzager\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dev.OmarBinzager\\source\\repos\\ToDoProject\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "UsingMicrosoftNETSdk": false,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Dev.OmarBinzager\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "dependencies": {
+            "CommonServiceLocator": {
+              "target": "Package",
+              "version": "[2.0.2, )"
+            },
+            "CommonWin32": {
+              "target": "Package",
+              "version": "[2.1.0.3, )"
+            },
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.2.2, )"
+            },
+            "Extended.Wpf.Toolkit": {
+              "target": "Package",
+              "version": "[4.7.25104.5739, )"
+            },
+            "Jamesnet.Design": {
+              "target": "Package",
+              "version": "[1.0.0.46, )"
+            },
+            "Jamesnet.Wpf": {
+              "target": "Package",
+              "version": "[1.0.0.113, )"
+            },
+            "MaterialDesignColors": {
+              "target": "Package",
+              "version": "[5.2.1, )"
+            },
+            "MaterialDesignThemes": {
+              "target": "Package",
+              "version": "[5.2.1, )"
+            },
+            "Microsoft.Bcl.AsyncInterfaces": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.Windows.SDK.Contracts": {
+              "target": "Package",
+              "version": "[10.0.18362.2005, )"
+            },
+            "Microsoft.Xaml.Behaviors.Wpf": {
+              "target": "Package",
+              "version": "[1.1.39, )"
+            },
+            "ModernWpfUI": {
+              "target": "Package",
+              "version": "[0.9.6, )"
+            },
+            "MvvmLightLibs": {
+              "target": "Package",
+              "version": "[5.4.1.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "Prism.Core": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Prism.Unity": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Prism.Wpf": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "SharpVectors": {
+              "target": "Package",
+              "version": "[1.8.4.2, )"
+            },
+            "System.Buffers": {
+              "target": "Package",
+              "version": "[4.5.1, )"
+            },
+            "System.Collections": {
+              "target": "Package",
+              "version": "[4.0.11, )"
+            },
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "System.Diagnostics.Debug": {
+              "target": "Package",
+              "version": "[4.0.11, )"
+            },
+            "System.Diagnostics.Tools": {
+              "target": "Package",
+              "version": "[4.0.1, )"
+            },
+            "System.Globalization": {
+              "target": "Package",
+              "version": "[4.0.11, )"
+            },
+            "System.IO.Pipelines": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "System.Linq": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "System.Linq.Expressions": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "System.Memory": {
+              "target": "Package",
+              "version": "[4.5.5, )"
+            },
+            "System.Numerics.Vectors": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "System.ObjectModel": {
+              "target": "Package",
+              "version": "[4.0.12, )"
+            },
+            "System.Reflection.Extensions": {
+              "target": "Package",
+              "version": "[4.0.1, )"
+            },
+            "System.Runtime.CompilerServices.Unsafe": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.Runtime.Extensions": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "System.Runtime.Serialization.Primitives": {
+              "target": "Package",
+              "version": "[4.1.1, )"
+            },
+            "System.Runtime.WindowsRuntime": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "System.Runtime.WindowsRuntime.UI.Xaml": {
+              "target": "Package",
+              "version": "[4.6.0, )"
+            },
+            "System.Text.Encoding.Extensions": {
+              "target": "Package",
+              "version": "[4.0.11, )"
+            },
+            "System.Text.Encodings.Web": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "System.Text.RegularExpressions": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "System.Threading.Tasks.Extensions": {
+              "target": "Package",
+              "version": "[4.5.4, )"
+            },
+            "System.ValueTuple": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "Unity.Abstractions": {
+              "target": "Package",
+              "version": "[5.11.7, )"
+            },
+            "Unity.Container": {
+              "target": "Package",
+              "version": "[5.11.11, )"
+            },
+            "WpfAutoGrid": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "YamlDotNet.NetCore": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            }
+          },
+          "imports": [
+            "uap10.0.18362"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-arm64": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+﻿<Page x:Class="ToDoProject.View.Help"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ToDoProject.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Help" Style="{DynamicResource pageStyle}">
+
+    <Grid>
+        <Border Style="{StaticResource bordedContainer}" Padding="40">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="1" TextAlignment="Center" Style="{StaticResource InterBold16}" FontSize="24" Margin="0 0 0 15">
+                    Welcome to the Help Center!
+                </TextBlock>
+                <TextBlock Grid.Row="3" MaxWidth="1000" Style="{StaticResource InterRegular15}" FontSize="18" LineHeight="27" Foreground="{StaticResource secondIconColor}" TextWrapping="Wrap" Margin="0 0 0 10">
+                    This page is here to guide you through using the To-Do app with ease. You can create new tasks, mark them as completed, organize them by date or category, and set reminders so you never miss a deadline. Tasks are grouped by day, with labels like “Today” or “Yesterday” for quick reference. To edit or delete a task, simply tap and hold it. If you have questions or need support, feel free to contact us anytime. We're here to help you stay organized and productive!
+                </TextBlock>
+                <StackPanel Grid.Row="5">
+                    <TextBlock Style="{StaticResource MontsMedium13}" HorizontalAlignment="Center">© 2025 ToDo. All rights reserved.</TextBlock>
+                    <TextBlock Style="{StaticResource MontsMedium13}" HorizontalAlignment="Center">Programmed and Designed By Dev.Omar Binzager</TextBlock>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Page>
