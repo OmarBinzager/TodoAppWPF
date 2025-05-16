@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ToDoProject.Classes;
 using ToDoProject.Model;
@@ -16,6 +17,10 @@ using System.Data;
 using System.Windows.Documents;
 using System.IO;
 using CommonWin32;
+using ToDoProject.View;
+using System.Windows;
+using Windows.System;
+using Windows.ApplicationModel.UserDataTasks;
 
 namespace ToDoProject.Services
 {
@@ -29,24 +34,31 @@ namespace ToDoProject.Services
         {
             try
             {
-                var data = new Dictionary<string, string>()
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                var content = new MultipartFormDataContent();
+                content.Add(new StringContent(task.Title), "title");
+                content.Add(new StringContent(task.Description), "description");
+                content.Add(new StringContent(task.Status.Id.ToString()), "status");
+                content.Add(new StringContent(task.DueDate.ToString("yyyy-MM-dd hh:mm:ss")), "due_date");
+                content.Add(new StringContent(task.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss")), "created_at");
+
+                if (task.Category != null) content.Add(new StringContent(task.Category.Id.ToString()), "category");
+                if (task.Priority != null) content.Add(new StringContent(task.Priority.Id.ToString()), "priority");
+                if (!string.IsNullOrEmpty(task.Picture))
                 {
-                    { "title", task.Title },
-                    { "description", task.Description },
-                    { "picture", task.Picture },
-                    { "status", task.Status.Id.ToString() },
-                    { "due_date", task.DueDate.ToString("yyyy-MM-dd") },
-                    { "created_at", task.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss") },
-                    { "user_id", SessionService.Instance.CurrentUser.Id.ToString() }
-                };
-                if (task.Category != null) data.Add("category", task.Category.Id.ToString());
-                if (task.Priority != null) data.Add("priority", task.Priority.Id.ToString());
-
-                string url = UrlBuilder.BuildQueryUrl(ApiLink.addTask, data);
-
-                string response = await client.GetStringAsync(url);
-                Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
-                if (dict != null) {
+                    var fileStream = File.OpenRead(task.Picture);
+                    var fileContent = new StreamContent(fileStream);
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+                    content.Add(fileContent, "picture", Path.GetFileName(task.Picture));
+                }
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
+                var response = await client.PostAsync(ApiLink.addTask, content);
+                var responseBody = await response.Content.ReadAsStringAsync();
+                Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(responseBody);
+                if (response.StatusCode == System.Net.HttpStatusCode.Created) {
                     int id = -1;
                     if (int.TryParse(dict["id"].ToString(), out id))
                     {
@@ -112,30 +124,36 @@ namespace ToDoProject.Services
         {
             try
             {
-                var data = new Dictionary<string, string>()
-                {
-                    { "title", task.Title },
-                    { "description", task.Description },
-                    { "picture", task.Picture },
-                    { "status", task.Status.Id.ToString() },
-                    { "due_date", task.DueDate.ToString("yyyy-MM-dd") },
-                    { "created_at", task.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss") },
-                };
-                if (task.Category != null) data.Add("category", task.Category.Id.ToString());
-                if (task.Priority != null) data.Add("priority", task.Priority.Id.ToString());
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                var content = new MultipartFormDataContent();
+                content.Add(new StringContent(task.Title), "title");
+                content.Add(new StringContent(task.Description), "description");
+                content.Add(new StringContent(task.Status.Id.ToString()), "status");
+                content.Add(new StringContent(task.DueDate.ToString("yyyy-MM-dd hh:mm:ss")), "due_date");
+                content.Add(new StringContent(task.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss")), "created_at");
+                content.Add(new StringContent(task.CompletedAt.ToString("yyyy-MM-dd hh:mm:ss")), "completed_at");
 
-                string url = UrlBuilder.BuildQueryUrl(ApiLink.editTask(task.Id), data);
-
-                string response = await client.GetStringAsync(url);
-                Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
-                if (dict != null)
+                if (task.Category != null) if (task.Category.Name != null) content.Add(new StringContent(task.Category.Id.ToString()), "category");
+                if (task.Priority != null) if(task.Priority.Name != null) content.Add(new StringContent(task.Priority.Id.ToString()), "priority");
+                if (!string.IsNullOrEmpty(task.Picture))
                 {
-                    int id = 0;
-                    if (int.TryParse(dict["id"].ToString(), out id))
+                    if (!task.Picture.Contains(ApiLink.storage))
                     {
-                        return true;
+                        var fileStream = File.OpenRead(task.Picture);
+                        var fileContent = new StreamContent(fileStream);
+                        fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+                        content.Add(fileContent, "picture", Path.GetFileName(task.Picture));
                     }
-                    else return false;
+                }
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
+                var response = await client.PostAsync(ApiLink.editTask(task.Id), content);
+                var responseBody = await response.Content.ReadAsStringAsync();
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return true;
                 }
                 else return false;
             }
@@ -148,6 +166,11 @@ namespace ToDoProject.Services
         {
             try
             {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
                 string response = await client.GetStringAsync(ApiLink.getTasks);
                 List<Dictionary<string, object>> listDict = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(response);
                 if (listDict != null || listDict.Count > 0)
@@ -160,27 +183,50 @@ namespace ToDoProject.Services
             {
                 return new ObservableCollection<Model.Task>();
             }
-}
+        }
+
+        public async Task<ObservableCollection<Model.Task>> SearchAsync(string text)
+        {
+            try
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
+                string url = UrlBuilder.BuildQueryUrl(ApiLink.search, new Dictionary<string, string> { { "search", text } });
+                string response = await client.GetStringAsync(url);
+                List<Dictionary<string, object>> listDict = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(response);
+                if (listDict != null || listDict.Count > 0)
+                {
+                    return await StoreTaskObjects(listDict);
+                }
+                else return new ObservableCollection<Model.Task>();
+            }
+            catch (Exception ex)
+            {
+                return new ObservableCollection<Model.Task>();
+            }
+        }
 
         private async Task<ObservableCollection<Model.Task>> StoreTaskObjects(List<Dictionary<string, object>> listDict)
         {
             var list = new ObservableCollection<Model.Task>();
             foreach (Dictionary<string, object> row in listDict)
             {
-                list.Add(new Model.Task()
-                {
-                    Id = int.Parse(row["id"].ToString()),
-                    Title = row["title"].ToString() ?? "",
-                    Description = row["description"].ToString() ?? "",
-                    DueDate = DateTime.Parse(row["due_date"].ToString()),
-                    Picture = (row["picture"] is null) ? "" : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads/" + row["picture"].ToString()),
-                    Category = (row["category"] is null) ? new Category() : new Category { Id = int.Parse(row["category"].ToString()), Name = row["category_name"].ToString() },
-                    Priority = (row["priority"] is null) ? new Priority() : new Priority { Id = int.Parse(row["priority"].ToString()), Name = row["priority_name"].ToString(), Color = row["priority_color"].ToString() },
-                    Status = new Status { Id = int.Parse(row["status"].ToString()), Name = row["status_name"].ToString(), Color = row["status_color"].ToString() },
-                    CreatedAt = string.IsNullOrEmpty(row["created_at"].ToString()) ? new DateTime() : DateTime.Parse(row["created_at"].ToString()),
-                    CompletedAt = string.IsNullOrEmpty(row["completed_at"].ToString()) ? new DateTime() : DateTime.Parse(row["completed_at"].ToString()),
-                    Steps = await GetStepsAsync(int.Parse(row["id"].ToString()))
-                });
+                var task = new Model.Task();
+                task.Id = int.Parse(row["id"].ToString());
+                task.Title = row["title"].ToString() ?? "";
+                task.Description = row["description"].ToString() ?? "";
+                task.DueDate = DateTime.Parse(row["due_date"].ToString());
+                task.Picture = (row["picture"] is null) ? "" : $"{ApiLink.storage}/{row["picture"]}";
+                task.Category = (row["category"] is null) ? new Category() : new Category { Id = int.Parse(row["category"].ToString()), Name = row["category_name"].ToString() };
+                task.Priority = (row["priority"] is null) ? new Priority() : new Priority { Id = int.Parse(row["priority"].ToString()), Name = row["priority_name"].ToString(), Color = row["priority_color"].ToString() };
+                task.Status = new Status { Id = int.Parse(row["status"].ToString()), Name = row["status_name"].ToString(), Color = row["status_color"].ToString() };
+                task.CreatedAt = row["created_at"] is null ? new DateTime() : DateTime.Parse(row["created_at"].ToString());
+                task.CompletedAt = row["completed_at"] is null ? new DateTime() : DateTime.Parse(row["completed_at"].ToString());
+                task.Steps = await GetStepsAsync(int.Parse(row["id"].ToString()));
+                list.Add(task);
             }
             return list;
         }
@@ -191,15 +237,18 @@ namespace ToDoProject.Services
         {
             try
             {
-                //var userId = SessionService.Instance.CurrentUser.Id.ToString();
+                var userId = SessionService.Instance.CurrentUser.Id.ToString();
                 var data = new Dictionary<string, string>()
                 {
                     { "name", category.Name },
-                    { "user_id", "2"},
                 };
 
                 string url = UrlBuilder.BuildQueryUrl(ApiLink.addCategory, data);
-
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
                 string response = await client.GetStringAsync(url);
                 Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
                 if (dict != null)
@@ -223,6 +272,11 @@ namespace ToDoProject.Services
         {
             try
             {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
                 string response = await client.GetStringAsync(ApiLink.getCategories);
                 List<Dictionary<string, object>> listDict = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(response);
                 if (listDict != null || listDict.Count > 0)
@@ -251,10 +305,11 @@ namespace ToDoProject.Services
         {
             try
             {
+                var user_id = SessionService.Instance.CurrentUser.Id.ToString();
                 var data = new Dictionary<string, string>()
                     {
                         { "name", category.Name },
-                        { "user_id",  SessionService.Instance.CurrentUser.Id.ToString() }
+                        { "user_id",  user_id }
                     };
                 string url = UrlBuilder.BuildQueryUrl(ApiLink.getCategoryId, data);
                 string response = await client.GetStringAsync(url);
@@ -296,12 +351,17 @@ namespace ToDoProject.Services
         {
             try
             {
+                var user_id = SessionService.Instance.CurrentUser.Id.ToString();
                 var data = new Dictionary<string, string>()
                     {
                         { "name", category.Name },
-                        { "user_id",  SessionService.Instance.CurrentUser.Id.ToString() }
                     };
                 string url = UrlBuilder.BuildQueryUrl(ApiLink.editCategory(category.Id), data);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
                 string response = await client.GetStringAsync(url);
                 Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
                 if (dict != null)
@@ -328,16 +388,18 @@ namespace ToDoProject.Services
         {
             try
             {
-                //var userId = SessionService.Instance.CurrentUser.Id.ToString();
                 var data = new Dictionary<string, string>()
                 {
                     { "name", priority.Name },
                     { "color", priority.Color },
-                    { "user_id", "2"},
                 };
 
-                string url = UrlBuilder.BuildQueryUrl(ApiLink.addCategory, data);
-
+                string url = UrlBuilder.BuildQueryUrl(ApiLink.addPriority, data);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
                 string response = await client.GetStringAsync(url);
                 Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
                 if (dict != null)
@@ -378,6 +440,11 @@ namespace ToDoProject.Services
         {
             try
             {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
                 string response = await client.GetStringAsync(ApiLink.getPriorities);
                 List<Dictionary<string, object>> listDict = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(response);
                 if (listDict != null || listDict.Count > 0)
@@ -406,11 +473,12 @@ namespace ToDoProject.Services
         {
             try
             {
+                var user_id = SessionService.Instance.CurrentUser.Id.ToString();
                 var data = new Dictionary<string, string>()
                     {
                         { "name", priority.Name },
                         { "color", priority.Color },
-                        { "user_id",  SessionService.Instance.CurrentUser.Id.ToString() }
+                        { "user_id",  user_id }
                     };
                 string url = UrlBuilder.BuildQueryUrl(ApiLink.getPriorityId, data);
                 string response = await client.GetStringAsync(url);
@@ -431,30 +499,123 @@ namespace ToDoProject.Services
                 return -1;
             }
         }
-        public Task<bool> UpdatePriorityAsync(Priority priority)
+        public async Task<bool> UpdatePriorityAsync(Priority priority)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var data = new Dictionary<string, string>()
+                    {
+                        { "name", priority.Name },
+                    };
+                string url = UrlBuilder.BuildQueryUrl(ApiLink.editPriority(priority.Id), data);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
+                string response = await client.GetStringAsync(url);
+                Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
+                if (dict != null)
+                {
+                    int id = -1;
+                    if (int.TryParse(dict["id"].ToString(), out id))
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
         #endregion
 
         #region Step
-        public Task<bool> AddStepAsync(Step step, int taskId)
+        public async Task<bool> AddStepAsync(Step step, int taskId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var data = new Dictionary<string, string>()
+                {
+                    { "step", step.Description },
+                    { "step_index", step.Index.ToString() },
+                };
+
+                string url = UrlBuilder.BuildQueryUrl(ApiLink.addSteps(taskId), data);
+
+                string response = await client.GetStringAsync(url);
+                Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
+                if (dict != null)
+                {
+                    int id = -1;
+                    if (int.TryParse(dict["step_index"].ToString(), out id))
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
-        public Task<bool> AddStepsAsync(Collection<Step> steps, int taskId)
+        public async Task<bool> AddStepsAsync(Collection<Step> steps, int taskId)
         {
-            throw new NotImplementedException();
-        }
-        public Task<bool> DeleteStepAsync(int id)
-        {
-            throw new NotImplementedException();
+            try
+            {
+
+                var json = JsonSerializer.Serialize(StoreStepsInDictionary(steps));
+                var content = new StringContent($"{{\"steps\":{json}}}", Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(ApiLink.addSteps(taskId), content);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                if ( response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    return true;
+                }
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
-        public Task<bool> DeleteStepsAsync(int taskId)
+        private List<Dictionary<string, string>> StoreStepsInDictionary(Collection<Step> steps)
         {
-            throw new NotImplementedException();
+            var listofSteps = new List<Dictionary<string, string>> ();
+            foreach (var step in steps) {
+                listofSteps.Add(new Dictionary<string, string> { { "step", step.Description }, { "step_index", step.Index.ToString() } });
+            }
+            return listofSteps;
+        }
+
+        public async Task<bool> DeleteStepAsync(int id)
+        {
+            throw new NullReferenceException();
+        }
+
+        public async Task<bool> DeleteStepsAsync(int taskId)
+        {
+            try
+            {
+                string response = await client.GetStringAsync(ApiLink.deleteSteps(taskId));
+                Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
+                if (dict != null)
+                {
+                    return true;
+                }
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public Task<bool> UpdateStepAsync(Step step, int taskId)
@@ -462,9 +623,25 @@ namespace ToDoProject.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateStepsAsync(Collection<Step> steps, int taskId)
+        public async Task<bool> UpdateStepsAsync(Collection<Step> steps, int taskId)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                var json = JsonSerializer.Serialize(StoreStepsInDictionary(steps));
+                var content = new StringContent($"{{\"steps\":{json}}}", Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(ApiLink.editSteps(taskId), content);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return true;
+                }
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
         public async Task<ObservableCollection<Step>> GetStepsAsync(int taskId)
         {
@@ -498,21 +675,210 @@ namespace ToDoProject.Services
 
 
         #region Authentication 
-        public Task<User> Authenticate(string email, string password)
+        public async Task<Model.User> Authenticate(string email, string password)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var formObj = new Dictionary<string, string>()
+                {
+                    { "email", email },
+                    { "password", password },
+                };
+                var json = JsonSerializer.Serialize(formObj);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(ApiLink.login, content);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                JsonDocument doc = JsonDocument.Parse(responseBody);
+                JsonElement data = doc.RootElement;
+                var userObj = JsonSerializer.Deserialize<Dictionary<string, object>>(data.GetProperty("user"));
+                string message = data.GetProperty("message").ToString();
+                var token = data.GetProperty("token");
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var user = new Model.User()
+                    {
+                        Id = int.Parse(userObj["id"].ToString()),
+                        FirstName = userObj["first_name"].ToString(),
+                        LastName = userObj["last_name"].ToString(),
+                        Email = userObj["email"].ToString(),
+                        Avatar = userObj["avatar"] is null ? "" : $"{ApiLink.storage}/{userObj["avatar"].ToString()}",
+                        Token = token.ToString(),
+                    };
+                    return user;
+                }
+                else
+                {
+                    MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
-        public Task<bool> RegisterUser(User user, string password)
+        public async Task<bool> RegisterUser(Model.User user, string password, string passwordConfirm)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var userObj = new Dictionary<string, string>()
+                {
+                    { "first_name", user.FirstName },
+                    { "last_name", user.LastName },
+                    { "email", user.Email },
+                    { "password", password },
+                    { "password_confirmation", passwordConfirm }
+                };
+                var json = JsonSerializer.Serialize(userObj);
+                var content = new MultipartFormDataContent();
+                //content.Add(new StringContent(json, Encoding.UTF8, "application/json")) ;
+                content.Add(new StringContent(user.FirstName), "first_name");
+                content.Add(new StringContent(user.LastName), "last_name");
+                content.Add(new StringContent(user.Email), "email");
+                content.Add(new StringContent(password), "password");
+                content.Add(new StringContent(passwordConfirm), "password_confirmation");
+                if (string.IsNullOrEmpty(user.Avatar)) {
+                    var fileStream = File.OpenRead(user.Avatar);
+                    var fileContent = new StreamContent(fileStream);
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+
+                    content.Add(fileContent, "avatar", Path.GetFileName(user.Avatar));
+                }
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.PostAsync(ApiLink.register, content);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var responseObj = JsonSerializer.Deserialize<Dictionary<string, object>>(responseBody);
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    return true;
+                }else
+                {
+                    MessageBox.Show(responseObj["message"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
+
+        public async Task<bool> Logout()
+        {
+            try
+            {
+                var content = new StringContent("", Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                var response = await client.PostAsync(ApiLink.logout, content);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var responseObj = JsonSerializer.Deserialize<Dictionary<string, object>>(responseBody);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show(responseObj["message"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+        }
+        
         #endregion
 
 
         #region Dashboard
-        public Task<Dictionary<string, object>> GetDashboardDataAsync()
+        public async Task<Dictionary<string, object>> GetDashboardStatsAsync()
         {
-            throw new NotImplementedException();
+            var stats = new Dictionary<string, object>();
+            try
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
+                string response = await client.GetStringAsync(ApiLink.getStats);
+                var dict = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
+                if (dict != null || dict.Count > 0)
+                {
+                    stats.Add("tasksCount", int.Parse(dict["total_tasks"].ToString()));
+                    if (int.Parse(dict["total_tasks"].ToString()) == 0)
+                    {
+                        stats.Add("percentage1", 0);
+                        stats.Add("percentage2", 0);
+                        stats.Add("percentage3", 0);
+                        return stats;
+                    }
+                    double percentage1 = double.Parse(dict["not_started"].ToString());
+                    double percentage2 = double.Parse(dict["in_progress"].ToString());
+                    double percentage3 = double.Parse(dict["completed"].ToString());
+                    stats.Add("percentage1", percentage1);
+                    stats.Add("percentage2", percentage2);
+                    stats.Add("percentage3", percentage3);
+                    return stats;
+                }
+                else return stats;
+            }
+            catch (Exception ex) {
+                return stats;
+            }
+            
+        }
+
+        public async Task<ObservableCollection<Model.Task>> GetRecentTasks()
+        {
+            try
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                string response = await client.GetStringAsync(ApiLink.getRecentTasks);
+                List<Dictionary<string, object>> listDict = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(response);
+                if (listDict != null || listDict.Count > 0)
+                {
+                    return await StoreTaskObjects(listDict);
+                }
+                else return new ObservableCollection<Model.Task>();
+            }
+            catch (Exception ex)
+            {
+                return new ObservableCollection<Model.Task>();
+            }
+        }
+
+        public async Task<ObservableCollection<Model.Task>> GetCompletedTasks()
+        {
+            try
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{SessionService.Instance.CurrentUser.Token}");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json")
+                );
+                string response = await client.GetStringAsync(ApiLink.getCompletedTasks);
+                List<Dictionary<string, object>> listDict = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(response);
+                if (listDict != null || listDict.Count > 0)
+                {
+                    return await StoreTaskObjects(listDict);
+                }
+                else return new ObservableCollection<Model.Task>();
+            }
+            catch (Exception ex)
+            {
+                return new ObservableCollection<Model.Task>();
+            }
         }
 
 
@@ -520,9 +886,32 @@ namespace ToDoProject.Services
 
 
         #region Status
-        public Task<ObservableCollection<Status>> GetStatusesAsync()
+        public async Task<ObservableCollection<Status>> GetStatusesAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                string response = await client.GetStringAsync(ApiLink.getStatuses);
+                List<Dictionary<string, object>> listDict = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(response);
+                if (listDict != null || listDict.Count > 0)
+                {
+                    return await StoreStatusObjects(listDict);
+                }
+                else return new ObservableCollection<Status>();
+            }
+            catch (Exception ex)
+            {
+                return new ObservableCollection<Status>();
+            }
+        }
+
+        private async Task<ObservableCollection<Status>> StoreStatusObjects(List<Dictionary<string, object>> listDict)
+        {
+            var list = new ObservableCollection<Status>();
+            foreach (Dictionary<string, object> row in listDict)
+            {
+                list.Add(new Status { Id = int.Parse(row["id"].ToString()), Name = row["name"].ToString(), Color = row["color"].ToString() });
+            }
+            return list;
         }
 
         public Task<int> GetStatusIdAsync(Status status)

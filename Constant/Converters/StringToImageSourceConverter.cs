@@ -18,6 +18,15 @@ namespace ToDoProject.Constant.Converters
             {
                 try
                 {
+                    if (path.Contains(ApiLink.storage))
+                    {
+                        var bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(path, UriKind.Absolute);
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+                        return bitmap;
+                    }
                     return new BitmapImage(new Uri(path, UriKind.RelativeOrAbsolute));
                 }
                 catch

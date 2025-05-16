@@ -124,19 +124,18 @@ namespace ToDoProject.View.Components
             if (isNotCurrentStatus(1))
             {
                 ((Task)DataContext).Status = statuses.ToList()[1];
-                setStatusToTask(2);
+                ((Task)DataContext).CompletedAt = new DateTime();
+                setStatusToTask();
                 MainViewModel.Instance.OnTasksChanged();
                 DeleteCommand?.Execute(null);
             }
         }
 
 
-        private async System.Threading.Tasks.Task setStatusToTask(int statusId)
+        private async System.Threading.Tasks.Task setStatusToTask()
         {
             var service = DataServiceFactory.GetService();
-            var data = new Dictionary<string, object>() { { "status", statusId } };
-            var param = new Dictionary<string, object>() { { "id", Task.Id } };
-            await service.UpdateFeildAtTable("Task", data, "id = @id", param);
+            await service.UpdateTaskAsync(Task);
         }
 
         private void MenuItem_Click_Not_Started(object sender, RoutedEventArgs e)
@@ -144,7 +143,8 @@ namespace ToDoProject.View.Components
             if (isNotCurrentStatus(0))
             {
                 ((Task)DataContext).Status = statuses.ToList()[0];
-                setStatusToTask(1);
+                ((Task)DataContext).CompletedAt = new DateTime();
+                setStatusToTask();
                 MainViewModel.Instance.OnTasksChanged();
                 DeleteCommand?.Execute(null);
             }

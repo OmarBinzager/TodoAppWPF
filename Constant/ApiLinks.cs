@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage.AccessCache;
 
 namespace ToDoProject.Constant
 {
@@ -12,6 +13,7 @@ namespace ToDoProject.Constant
         // Server 
         public const string server = "127.0.0.1";
         public const string port = "8000";
+        public readonly static string serverWeblink = $"http://{server}:{port}";
         public readonly static string serverlink = $"http://{server}:{port}/api";
 
         #region Task API Links
@@ -22,11 +24,12 @@ namespace ToDoProject.Constant
         public readonly static string addTask = $"{tasklink}/add";
         public readonly static string getTaskId = $"{tasklink}/get-id";
         public readonly static string getTasks = $"{tasklink}/get-all";
+        public readonly static string search = $"{tasklink}/search";
         // parametered task routes
         public static string deleteTask(int id) => $"{tasklink}/{id}/delete";
         public static string editTask(int id) => $"{tasklink}/{id}/edit";
         public static string getSteps(int id) => $"{tasklink}/{id}/get-steps";
-        public static string addStep(int id) => $"{tasklink}/{id}/add-step";
+        public static string addSteps(int id) => $"{tasklink}/{id}/add-steps";
         public static string editSteps(int id) => $"{tasklink}/{id}/edit-steps";
         public static string deleteStep(int id, int stepId) => $"{tasklink}/{id}/delete-step/{stepId}";
         public static string deleteSteps(int id) => $"{tasklink}/{id}/delete-steps";
@@ -76,6 +79,20 @@ namespace ToDoProject.Constant
         public readonly static string getStats = $"{dashboardlink}/stats";
         public readonly static string getRecentTasks = $"{dashboardlink}/recent-tasks";
         public readonly static string getCompletedTasks = $"{dashboardlink}/completed-tasks";
+        #endregion
+
+        #region Authentication
+        //global auth link
+        public readonly static string authlink = $"{serverlink}/auth";
+        // auth routes
+        public readonly static string login = $"{authlink}/login";
+        public readonly static string logout = $"{authlink}/logout";
+        public readonly static string register = $"{authlink}/register";
+        #endregion
+
+
+        #region Storage
+        public readonly static string storage = $"{serverWeblink}/storage";
         #endregion
 
 

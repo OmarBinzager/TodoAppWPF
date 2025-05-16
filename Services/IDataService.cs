@@ -16,9 +16,12 @@ namespace ToDoProject.Services
         Task<int> GetPriorityIdAsync(Priority priority);
         Task<int> GetStatusIdAsync(Status status);
         Task<ObservableCollection<Model.Task>> GetTasksAsync();
+        Task<ObservableCollection<Model.Task>> SearchAsync(string text);
         Task<ObservableCollection<Category>> GetCategoriesAsync();
         Task<ObservableCollection<Priority>> GetPrioritiesAsync();
-        Task<Dictionary<string, object>> GetDashboardDataAsync();
+        Task<Dictionary<string, object>> GetDashboardStatsAsync();
+        Task<ObservableCollection<Model.Task>> GetCompletedTasks();
+        Task<ObservableCollection<Model.Task>> GetRecentTasks();
         Task<ObservableCollection<Status>> GetStatusesAsync();
         Task<ObservableCollection<Step>> GetStepsAsync(int taskId);
         Task<bool> AddTaskAsync(Model.Task task);
@@ -39,7 +42,8 @@ namespace ToDoProject.Services
 
         Task<bool> UpdateFeildAtTable(string table, Dictionary<string, object> data, string whereClause, Dictionary<string, object> whereParams);
         Task<User> Authenticate(string email, string password);
-        Task<bool> RegisterUser(User user, string password);
+        Task<bool> RegisterUser(User user, string password, string passwordConfirm);
+        Task<bool> Logout();
 
     }
 }

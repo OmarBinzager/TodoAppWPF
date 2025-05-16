@@ -36,7 +36,7 @@
                     <StackPanel Orientation="Horizontal">
                         <components:AuthActionButton Text="Login" Command="{Binding LoginCommand}" Margin="0 0 25 70"/>
                         <modern:ProgressRing IsActive="{Binding IsLoading}" 
-                                             Width="60" Height="60"
+                                             Width="50" Height="50" VerticalAlignment="Top"
                                              Foreground="{StaticResource primaryColor}"
                                                 Visibility="{Binding IsLoading, Converter={StaticResource boolToVisibility}}" />
                     </StackPanel>

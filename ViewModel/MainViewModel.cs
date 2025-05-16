@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Policy;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,6 +22,7 @@ using ToDoProject.Model;
 using ToDoProject.Services;
 using ToDoProject.Utils;
 using ToDoProject.View;
+using YamlDotNet.Core.Tokens;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace ToDoProject.ViewModel
@@ -60,7 +62,7 @@ namespace ToDoProject.ViewModel
             get { return _email; }
             set { _email = value; OnPropertyChanged(nameof(Email)); }
         }
-
+        public SearchView SearchView { get; set; }
         private string _avatar;
 
         public string Avatar
@@ -69,6 +71,23 @@ namespace ToDoProject.ViewModel
             set { _avatar = value; OnPropertyChanged(nameof(Avatar)); }
         }
 
+        private string _searchedText;
+
+        public DispatcherTimer searchDispatcher;
+        public string SearchedText
+        {
+            get { return _searchedText; }
+            set { _searchedText = value;
+                OnPropertyChanged(SearchedText); }
+        }
+        public Func<string, System.Threading.Tasks.Task> SearchTextUpdatedAction { get; set; }
+        public void OpenSearchPage()
+        {
+            SearchView = SearchView ?? new SearchView();
+            SearchTextUpdatedAction = (SearchView.DataContext as SearchViewModel).SearchTextUpdatedAction;
+            frame.Navigate(SearchView);
+            BackButton = true;
+        }
 
         public string CurrentDay
         {
@@ -109,6 +128,7 @@ namespace ToDoProject.ViewModel
             CurrentDate = DateTime.Now.ToString("dd/mm/yyyy");
             currentDay = DateTime.Now.ToString("dddd");
         }
+        
 
         public Frame frame { get; set; }
         public ContentControl ContentControl { get; set; }
@@ -142,6 +162,7 @@ namespace ToDoProject.ViewModel
             }
         }
 
+
         public void Close()
         {
             _instance = null;
@@ -151,11 +172,12 @@ namespace ToDoProject.ViewModel
             NavSelectCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<string>(NavSelect);
             GoBackCommand = new RelayCommand(GoBack);
             LogoutCommand = new RelayCommand(Logout);
+            SearchCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<string>(Search);
             BlurContent = "0";
             BackButton = false;
             //var uri = new Uri(string.IsNullOrEmpty(SessionService.Instance.CurrentUser.Avatar) ?"pack://application:,,,/Assets/default-user.jpg" : $"pack://application:,,,/Uploads/{SessionService.Instance.CurrentUser.Avatar}");
             //Avatar = new BitmapImage(uri);
-            Avatar = string.IsNullOrEmpty(SessionService.Instance.CurrentUser.Avatar) ? "pack://application:,,,/Assets/default-user.jpg" : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads/" + SessionService.Instance.CurrentUser.Avatar); //: $" / Uploads/{SessionService.Instance.CurrentUser.Avatar}"; string.IsNullOrEmpty(SessionService.Instance.CurrentUser.Avatar) ?
+            Avatar = string.IsNullOrEmpty(SessionService.Instance.CurrentUser.Avatar) ? "pack://application:,,,/Assets/default-user.jpg" : SessionService.Instance.CurrentUser.Avatar.Contains(ApiLink.storage) ? SessionService.Instance.CurrentUser.Avatar : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads/" + SessionService.Instance.CurrentUser.Avatar); //: $" / Uploads/{SessionService.Instance.CurrentUser.Avatar}"; string.IsNullOrEmpty(SessionService.Instance.CurrentUser.Avatar) ?
             Username = $"{SessionService.Instance.CurrentUser.FirstName} {SessionService.Instance.CurrentUser.LastName}";
             Email = SessionService.Instance.CurrentUser.Email;
             NavigateToDashboard();
@@ -163,6 +185,7 @@ namespace ToDoProject.ViewModel
 
         public ICommand GoBackCommand { get; set; }
         public ICommand LogoutCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
 
         public void Logout()
         {
@@ -178,6 +201,15 @@ namespace ToDoProject.ViewModel
             loginWindow.Show();
             mainwindow.Close();
             this.Close();
+        }
+
+        public void Search(string query)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                OpenSearchPage();
+                SearchTextUpdatedAction?.Invoke(query);
+            }
         }
 
         private Page _CurrentPage;
@@ -256,6 +288,7 @@ namespace ToDoProject.ViewModel
 
         public void NavigateToPage<T>() where T : Page
         {
+            SearchView = null;
             if (CurrentPage is T) return;
             CurrentPage = (T)Activator.CreateInstance(typeof(T));
         }
@@ -268,13 +301,16 @@ namespace ToDoProject.ViewModel
 
         public void OpenPage(Page page)
         {
+            SearchView = null;
             frame.Navigate(page);
             BackButton = true;
         }
 
+
         public void GoBack()
         {
             frame.GoBack();
+            SearchView = null;
             BackButton = false;
         }
 
@@ -306,7 +342,6 @@ namespace ToDoProject.ViewModel
         public event EventHandler CategoriesChanged;
         public void OnCategoriesChanged() => CategoriesChanged?.Invoke(this, new EventArgs());
         public Icons icons { get; set; }
-        public string Text { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

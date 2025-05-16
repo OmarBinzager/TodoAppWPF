@@ -50,7 +50,7 @@
                         <Border Height="20" />
                         <Border Width="88" Height="88" CornerRadius="14" VerticalAlignment="Bottom">
                             <Border.Background>
-                                <ImageBrush ImageSource="{Binding Picture}"/>
+                                <ImageBrush ImageSource="{Binding Picture, Converter={StaticResource StringToImageSourceConverter}}"/>
                             </Border.Background>
                         </Border>
                     </StackPanel>

@@ -8,9 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 using ToDoProject.Classes;
 using ToDoProject.Model;
 using ToDoProject.View;
+using Windows.Storage.Pickers.Provider;
 
 namespace ToDoProject.Services
 {
@@ -289,28 +291,42 @@ namespace ToDoProject.Services
             {
                 string query = $"Select Task.id, title, description, picture, due_date, created_at, completed_at, Category.id as \"category_id\", Category.name as \"category_name\", [Priority].id as \"priority_id\" , [Priority].name as \"priority_name\", [Priority].color as \"priority_color\", [Status].id as \"status_id\", [Status].name as \"status_name\", [Status].color as \"status_color\" from Task left join Category on Task.category = Category.id left join [Priority] on Task.[priority] = [Priority].id join [Status] on Task.[status] = [Status].id WHERE Task.user_id = {SessionService.Instance.CurrentUser.Id}";
                 var dt = db.SqlCmd(query);
-                var list = new ObservableCollection<Model.Task>();
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    list.Add(new Model.Task
-                    {
-                        Id = (int)row["id"],
-                        Title = row["title"].ToString() ?? "",
-                        Description = row["description"].ToString() ?? "",
-                        DueDate = (DateTime)row["due_date"],
-                        Picture = !(row["picture"] is string) ? "" : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads/" + row["picture"].ToString()),
-                        Category = !(row["category_id"] is int) ? new Category() : new Category { Id = (int)row["category_id"], Name = row["category_name"].ToString() },
-                        Priority = !(row["priority_id"] is int) ? new Priority() : new Priority { Id = (int)row["priority_id"], Name = row["priority_name"].ToString(), Color = row["priority_color"].ToString() },
-                        Status = new Status { Id = (int)row["status_id"], Name = row["status_name"].ToString(), Color = row["status_color"].ToString() },
-                        CreatedAt = string.IsNullOrEmpty(row["created_at"].ToString()) ? new DateTime() : (DateTime)row["created_at"],
-                        CompletedAt = string.IsNullOrEmpty(row["completed_at"].ToString()) ? new DateTime() : (DateTime)row["completed_at"],
-                        Steps = await GetStepsAsync((int)row["id"])
-                    });
-                }
-
-                return list;
+                return await StoreTaskIntoObjects(dt);
             });
+        }
+
+        public async Task<ObservableCollection<Model.Task>> SearchAsync(string text)
+        {
+            return await System.Threading.Tasks.Task.Run(async () =>
+            {
+                string query = $"Select Task.id, title, description, picture, due_date, created_at, completed_at, Category.id as \"category_id\", Category.name as \"category_name\", [Priority].id as \"priority_id\" , [Priority].name as \"priority_name\", [Priority].color as \"priority_color\", [Status].id as \"status_id\", [Status].name as \"status_name\", [Status].color as \"status_color\" from Task left join Category on Task.category = Category.id left join [Priority] on Task.[priority] = [Priority].id join [Status] on Task.[status] = [Status].id WHERE Task.user_id = {SessionService.Instance.CurrentUser.Id} and (Task.title like '%{text}%'  or Task.description like '%{text}%')";
+                var dt = db.SqlCmd(query);
+                return await StoreTaskIntoObjects(dt);
+            });
+        }
+
+        private async Task<ObservableCollection<Model.Task>> StoreTaskIntoObjects(DataTable dt)
+        {
+            var list = new ObservableCollection<Model.Task>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                var task = new Model.Task();
+                task.Id = (int)row["id"];
+                task.Title = row["title"].ToString() ?? "";
+                task.Description = row["description"].ToString() ?? "";
+                task.DueDate = (DateTime)row["due_date"];
+                task.Picture = !(row["picture"] is string) ? "" : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads/" + row["picture"].ToString());
+                task.Category = !(row["category_id"] is int) ? new Category() : new Category { Id = (int)row["category_id"], Name = row["category_name"].ToString() };
+                task.Priority = !(row["priority_id"] is int) ? new Priority() : new Priority { Id = (int)row["priority_id"], Name = row["priority_name"].ToString(), Color = row["priority_color"].ToString() };
+                task.Status = new Status { Id = (int)row["status_id"], Name = row["status_name"].ToString(), Color = row["status_color"].ToString() };
+                task.CreatedAt = string.IsNullOrEmpty(row["created_at"].ToString()) ? new DateTime() : (DateTime)row["created_at"];
+                task.CompletedAt = row["completed_at"].ToString() == "" || row["completed_at"] is null ? new DateTime() : (DateTime)row["completed_at"];
+                task.Steps = await GetStepsAsync((int)row["id"]);
+                list.Add(task);
+            }
+
+            return list;
         }
 
         public async Task<ObservableCollection<Model.Task>> GetTasksWhereAsync(string where = "", string rowsCount = "", string order = "")
@@ -320,33 +336,17 @@ namespace ToDoProject.Services
                 string query = $"Select {rowsCount} Task.id, title, description, picture, due_date, created_at, completed_at, Category.id as \"category_id\", Category.name as \"category_name\", [Priority].id as \"priority_id\" , [Priority].name as \"priority_name\", [Priority].color as \"priority_color\", [Status].id as \"status_id\", [Status].name as \"status_name\", [Status].color as \"status_color\" from Task left join Category on Task.category = Category.id left join [Priority] on Task.[priority] = [Priority].id join [Status] on Task.[status] = [Status].id {where} {order}";
 
                 var dt = db.SqlCmd(query);
-                var list = new ObservableCollection<Model.Task>();
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    list.Add(new Model.Task
-                    {
-                        Id = (int)row["id"],
-                        Title = row["title"].ToString() ?? "",
-                        Description = row["description"].ToString() ?? "",
-                        DueDate = (DateTime)row["due_date"],
-                        Picture = !(row["picture"] is string) ? "" : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads/" + row["picture"].ToString()),
-                        Category = !(row["category_id"] is int) ? new Category() : new Category { Id = (int)row["category_id"], Name = row["category_name"].ToString() },
-                        Priority = !(row["priority_id"] is int) ? new Priority() : new Priority { Id = (int)row["priority_id"], Name = row["priority_name"].ToString(), Color = row["priority_color"].ToString() },
-                        Status = new Status { Id = (int)row["status_id"], Name = row["status_name"].ToString(), Color = row["status_color"].ToString() },
-                        CreatedAt = string.IsNullOrEmpty(row["created_at"].ToString()) ? new DateTime() : (DateTime)row["created_at"],
-                        CompletedAt = string.IsNullOrEmpty(row["completed_at"].ToString()) ? new DateTime() : (DateTime)row["completed_at"],
-                        Steps = await GetStepsAsync((int)row["id"])
-                    });
-                }
-
-                return list;
+                return await StoreTaskIntoObjects(dt);
             });
         }
 
         public string uploadImage(string path)
         {
             if (string.IsNullOrEmpty(path)) return "";
+            if (!File.Exists(path)) return "";
+            string uploads = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads", Path.GetFileName(path));
+            string rootOfSavedImage = Path.GetFullPath(path);
+            if (rootOfSavedImage == uploads) return Path.GetFileName(path);
             string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(path);
 
             // Get the path to the 'Uploads' folder
@@ -454,6 +454,7 @@ namespace ToDoProject.Services
                     { "priority", task.Priority.Id },
                     { "due_date", task.DueDate.ToString("yyyy-MM-dd") },
                     { "created_at", task.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss") },
+                    {"completed_at", task.CompletedAt == new DateTime() ? null : task.CompletedAt.ToString("yyyy-MM-dd hh:mm:ss") }
                 };
                 Dictionary<string, object> taskParams = new Dictionary<string, object>() {
                     { "id", task.Id },
@@ -479,29 +480,18 @@ namespace ToDoProject.Services
             });
         }
 
-        public async Task<Dictionary<string, object>> GetDashboardDataAsync()
+        public async Task<Dictionary<string, object>> GetDashboardStatsAsync()
         {
             return await System.Threading.Tasks.Task.Run(async () =>
             {
                 Dictionary<string, object> dashbordDic = new Dictionary<string, object>();
 
-                var result = db.Select("Status");
-
-                var statuslist = await GetStatusesAsync();
-
-                dashbordDic.Add("statuses", statuslist);
-
                 int taskCount = (int)db.SelectFields("Task", "Count(id) as count", $"user_id = {SessionService.Instance.CurrentUser.Id}").Rows[0]["count"];
                 double completedTaskCount = (int) db.SelectFields("Task", "Count(id) as count", $"status = 3 and user_id = {SessionService.Instance.CurrentUser.Id}").Rows[0]["count"];
                 double inProgTaskCount = (int)db.SelectFields("Task", "Count(id) as count", $"status = 2 and user_id = {SessionService.Instance.CurrentUser.Id}").Rows[0]["count"];
                 double notStartTaskCount = (int)db.SelectFields("Task", "Count(id) as count", $"status = 1 and user_id = {SessionService.Instance.CurrentUser.Id}").Rows[0]["count"];
-                dashbordDic.Add("taskCount", taskCount);
+                dashbordDic.Add("tasksCount", taskCount);
 
-                ObservableCollection<Model.Task> completedTasks = await GetTasksWhereAsync($"where status = 3 and Task.user_id = {SessionService.Instance.CurrentUser.Id}", "Top 5", "ORDER BY completed_at DESC");
-                ObservableCollection<Model.Task> latestTasks = await GetTasksWhereAsync($"where status != 3 and Task.user_id = {SessionService.Instance.CurrentUser.Id}", "TOP 10", "ORDER BY created_at DESC");
-
-                dashbordDic.Add("completedTasks", completedTasks);
-                dashbordDic.Add("latestTasks", latestTasks);
                 if (taskCount == 0)
                 {
                     dashbordDic.Add("percentage1", 0);
@@ -520,7 +510,16 @@ namespace ToDoProject.Services
             });
         }
 
-
+        public async Task<ObservableCollection<Model.Task>> GetRecentTasks()
+        {
+            ObservableCollection<Model.Task> latestTasks = await GetTasksWhereAsync($"where status != 3 and Task.user_id = {SessionService.Instance.CurrentUser.Id}", "TOP 10", "ORDER BY created_at DESC");
+            return latestTasks;
+        }
+        public async Task<ObservableCollection<Model.Task>> GetCompletedTasks()
+        {
+            ObservableCollection<Model.Task> completedTasks = await GetTasksWhereAsync($"where status = 3 and Task.user_id = {SessionService.Instance.CurrentUser.Id}", "Top 5", "ORDER BY completed_at DESC");
+            return completedTasks;
+        }
 
         public async Task<User> Authenticate(string email, string password)
         {
@@ -544,10 +543,11 @@ namespace ToDoProject.Services
             });
         }
 
-        public async Task<bool> RegisterUser(User user, string password)
+        public async Task<bool> RegisterUser(User user, string password, string passwordConfirm)
         {
             return await System.Threading.Tasks.Task.Run(() =>
             {
+                if (password != passwordConfirm) return false;
                 user.Avatar = uploadImage(user.Avatar);
                 Dictionary<string, object> paramdic = new Dictionary<string, object>()
                 {
@@ -561,6 +561,11 @@ namespace ToDoProject.Services
                 if (result != 1) return false;
                 return true;
             });
+        }
+
+        public async Task<bool> Logout()
+        {
+            return await System.Threading.Tasks.Task.Run(() => true);
         }
     }
 }

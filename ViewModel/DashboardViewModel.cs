@@ -180,44 +180,62 @@ namespace ToDoProject.ViewModel
 
         public async System.Threading.Tasks.Task InitializeProperties()
         {
-
-            LatestIsLoading = true;
             var service = DataServiceFactory.GetService();
-            Dictionary<string, object> dashboardDic = await service.GetDashboardDataAsync();
+            Dictionary<string, object> stats = await service.GetDashboardStatsAsync();
 
-            Statuses = dashboardDic["statuses"] as ObservableCollection<Status>;
-            int percentage1 = (int)dashboardDic["percentage1"];
-            int percentage2 = (int)dashboardDic["percentage2"];
-            int percentage3 = (int)dashboardDic["percentage3"];
-            setPercentageProgresses(percentage1, percentage2, percentage3);
-            if ((int)dashboardDic["taskCount"] != 0)
+            Statuses = await service.GetStatusesAsync();
+            double percentage1 = 0;
+            double percentage2 = 0;
+            double percentage3 = 0;
+            if (stats.Count > 0)
             {
-
-                CompletedTasks = dashboardDic["completedTasks"] as ObservableCollection<Model.Task>;
-                if (CompletedTasks.Count < 1)
+                percentage1 = double.Parse(stats["percentage1"].ToString());
+                percentage2 = double.Parse(stats["percentage2"].ToString());
+                percentage3 = double.Parse(stats["percentage3"].ToString());
+                setPercentageProgresses(percentage1, percentage2, percentage3);
+                if ((int)stats["tasksCount"] != 0)
                 {
-                    NoCompletedTasksMessage = "There aren't any completed tasks yet.";
+                    GetCompletedTasks(service);
+                    GetRecentTasks(service);
                 }
                 else
                 {
-                    NoCompletedTasksMessage = "";
                 }
-                CollectedTasks = GroupTasksByDate(dashboardDic["latestTasks"] as ObservableCollection<Model.Task>);
-                if (CollectedTasks.Count < 1)
-                {
-                    NoLatestTasksMessage = "There aren't any tasks yet, add new task by + button above.";
-                }
-                else
-                {
-                    NoLatestTasksMessage = "";
-                }
-            }
-            else
+            }else
             {
                 NoCompletedTasksMessage = "There aren't any completed tasks yet.";
                 NoLatestTasksMessage = "There aren't any tasks yet, add new task by + button above.";
             }
+        }
+
+        private async System.Threading.Tasks.Task GetRecentTasks(IDataService service)
+        {
+            LatestIsLoading = true;
+            CollectedTasks = GroupTasksByDate(await service.GetRecentTasks());
             LatestIsLoading = false;
+            if (CollectedTasks.Count < 1)
+            {
+                NoLatestTasksMessage = "There aren't any tasks yet, add new task by + button above.";
+            }
+            else
+            {
+                NoLatestTasksMessage = "";
+            }
+        }
+
+        private async System.Threading.Tasks.Task GetCompletedTasks(IDataService service)
+        {
+            CompleteTasksIsLoading = true;
+            CompletedTasks = await service.GetCompletedTasks();
+            CompleteTasksIsLoading = false;
+            if (CompletedTasks.Count < 1)
+            {
+                NoCompletedTasksMessage = "There aren't any completed tasks yet.";
+            }
+            else
+            {
+                NoCompletedTasksMessage = "";
+            }
         }
 
         public ObservableCollection<TaskGroup> GroupTasksByDate(ObservableCollection<Model.Task> tasks)
@@ -242,7 +260,7 @@ namespace ToDoProject.ViewModel
                 .ToList());
         }
 
-        private void setPercentageProgresses(int percentage1, int percentage2, int percentage3)
+        private void setPercentageProgresses(double percentage1, double percentage2, double percentage3)
         {
             Path1.Data = GetProgress(percentage1);
             PercentageText1 = $"{percentage1}%";

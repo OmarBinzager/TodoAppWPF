@@ -67,6 +67,27 @@ namespace ToDoProject.View.Components
             if ( TextChanged != null ) TextChanged.Invoke(this, e);
         }
 
+
+
+        public ICommand SearchCommand
+        {
+            get { return (ICommand)GetValue(SearchCommandProperty); }
+            set { SetValue(SearchCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Search.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SearchCommandProperty =
+            DependencyProperty.Register("SearchCommand", typeof(ICommand), typeof(SearchBar), new PropertyMetadata(null));
+
+
+
         public event EventHandler<TextChangedEventArgs> TextChanged;
+        public event EventHandler Search;
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Search?.Invoke(this, new EventArgs());
+            SearchCommand?.Execute(Text);
+        }
     }
 }

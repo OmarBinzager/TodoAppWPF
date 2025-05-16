@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Dev.OmarBinzager\source\repos\ToDoProject\App.xaml
-27-2010605311
+28-2112427999
 201744187517
-69-491425020
+73-1980358433
 252-37341959
-Constant\Colors.xaml;Constant\GlobalStyles.xaml;Constant\Icons.xaml;Constant\TextStyles.xaml;MainWindow.xaml;Themes\Generic.xaml;View\Categories.xaml;View\Components\CustomCalender.xaml;View\Components\DatePicker.xaml;View\Components\IconButton.xaml;View\Components\SearchBar.xaml;View\Components\CompletedTaskCard.xaml;View\Components\TaskCard.xaml;View\Components\TaskViewerPage.xaml;View\Components\TaskViewer.xaml;View\Components\TitledTextBox.xaml;View\Dashboard.xaml;View\Dialogs\PriorityDialog.xaml;View\Dialogs\CategoryDialog.xaml;View\Dialogs\TaskDialog.xaml;View\Help.xaml;View\AuthView.xaml;View\LoginView.xaml;View\RegisterView.xaml;View\Settings.xaml;View\Tasks.xaml;View\UserProfile.xaml;
+Constant\Colors.xaml;Constant\GlobalStyles.xaml;Constant\Icons.xaml;Constant\TextStyles.xaml;MainWindow.xaml;Themes\Generic.xaml;View\Categories.xaml;View\Components\CustomCalender.xaml;View\Components\DatePicker.xaml;View\Components\IconButton.xaml;View\Components\SearchBar.xaml;View\Components\CompletedTaskCard.xaml;View\Components\TaskCard.xaml;View\Components\TaskViewerPage.xaml;View\Components\TaskViewer.xaml;View\Components\TitledTextBox.xaml;View\Dashboard.xaml;View\Dialogs\PriorityDialog.xaml;View\Dialogs\CategoryDialog.xaml;View\Dialogs\TaskDialog.xaml;View\Help.xaml;View\AuthView.xaml;View\LoginView.xaml;View\RegisterView.xaml;View\Settings.xaml;View\SearchView.xaml;View\Tasks.xaml;View\UserProfile.xaml;
 
-True
+False
 

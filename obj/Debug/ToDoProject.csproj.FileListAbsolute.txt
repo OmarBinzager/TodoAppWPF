@@ -266,3 +266,5 @@ C:\Users\Dev.OmarBinzager\source\repos\ToDoProject\bin\Debug\uz-Latn-UZ\ModernWp
 C:\Users\Dev.OmarBinzager\source\repos\ToDoProject\bin\Debug\uz-Latn-UZ\ModernWpf.resources.dll
 C:\Users\Dev.OmarBinzager\source\repos\ToDoProject\bin\Debug\vi-VN\ModernWpf.Controls.resources.dll
 C:\Users\Dev.OmarBinzager\source\repos\ToDoProject\bin\Debug\vi-VN\ModernWpf.resources.dll
+C:\Users\Dev.OmarBinzager\source\repos\ToDoProject\obj\Debug\View\SearchView.g.cs
+C:\Users\Dev.OmarBinzager\source\repos\ToDoProject\obj\Debug\View\SearchView.baml

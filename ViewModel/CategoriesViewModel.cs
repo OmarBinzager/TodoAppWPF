@@ -30,6 +30,36 @@ namespace ToDoProject.ViewModel
             set { categories = value; OnPropertyChanged(nameof(Categories)); }
         }
 
+        private bool _CategoryIsLoading;
+
+        public bool CategoryIsLoading
+        {
+            get { return _CategoryIsLoading; }
+            set { _CategoryIsLoading = value; OnPropertyChanged(nameof(CategoryIsLoading)); }
+        }
+        private bool _PriorityIsLoading;
+
+        public bool PriorityIsLoading
+        {
+            get { return _PriorityIsLoading; }
+            set { _PriorityIsLoading = value; OnPropertyChanged(nameof(PriorityIsLoading)); }
+        }
+
+        private string _noCategoriesMessage;
+
+        public string NoCategoriesMessage
+        {
+            get { return _noCategoriesMessage; }
+            set { _noCategoriesMessage = value; OnPropertyChanged(nameof(NoCategoriesMessage)); }
+        }
+        private string _noPrioritiesMessage;
+
+        public string NoPrioritiesMessage
+        {
+            get { return _noPrioritiesMessage; }
+            set { _noPrioritiesMessage = value; OnPropertyChanged(nameof(NoPrioritiesMessage)); }
+        }
+
         public CategoriesViewModel()
         {
             loadData();
@@ -52,8 +82,38 @@ namespace ToDoProject.ViewModel
         public async void loadData()
         {
             var service = DataServiceFactory.GetService();
-            Priorities = await service.GetPrioritiesAsync();
+            GetPriorities(service);
+            GetCagegories(service);
+        }
+
+        private async System.Threading.Tasks.Task GetCagegories(IDataService service)
+        {
+            CategoryIsLoading = true;
             Categories = await service.GetCategoriesAsync();
+            CategoryIsLoading = false;
+            if(Categories.Count == 0)
+            {
+                NoCategoriesMessage = "There aren't any categories yet, add new task by + button above.";
+            }
+            else
+            {
+                NoCategoriesMessage = "";
+            }
+        }
+
+        private async System.Threading.Tasks.Task GetPriorities(IDataService service)
+        {
+            PriorityIsLoading = true;
+            Priorities = await service.GetPrioritiesAsync();
+            PriorityIsLoading = false;
+            if(Priorities.Count == 0)
+            {
+                NoPrioritiesMessage = "There aren't any priorities yet, add new task by + button above.";
+            }
+            else
+            {
+                NoPrioritiesMessage = "";
+            }
         }
 
         public ICommand EditCommand { get; set; }

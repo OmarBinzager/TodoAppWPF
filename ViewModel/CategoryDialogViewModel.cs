@@ -104,7 +104,7 @@ namespace ToDoProject.ViewModel
         {
             var service = DataServiceFactory.GetService();
             await service.AddCategoryAsync(Category);
-            await service.GetCategoryIdAsync(Category);
+            //await service.GetCategoryIdAsync(Category);
         }
 
         private void backToMainWindow()

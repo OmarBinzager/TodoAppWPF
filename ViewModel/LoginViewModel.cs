@@ -95,19 +95,19 @@ namespace ToDoProject.ViewModel
 
         public void Login()
         {
-            IsLoading = true;
             ValidateEmail();
             ValidatePassword();
 
             if (!HasErrors) {
                 Authenticate();
             }
-            IsLoading = false;
         }
 
         public async System.Threading.Tasks.Task Authenticate(){
             var service = DataServiceFactory.GetService();
+            IsLoading = true;
             User user = await service.Authenticate(Email, Password);
+            IsLoading = false;
             if (user != null)
             {
                 SessionService.Instance.SetUser(user);

@@ -87,6 +87,8 @@
                      Foreground="{StaticResource primaryColor}"
                      HorizontalAlignment="Center"
                         Visibility="{Binding CategoryIsLoading, Converter={StaticResource boolToVisibility}}" />
+                    <TextBlock HorizontalAlignment="Center"
+                        VerticalAlignment="Center" Style="{StaticResource MontsMedium16}" Foreground="{StaticResource secondIconColor}" Text="{Binding NoCategoriesMessage}" Visibility="{Binding NoCategoriesMessage, Converter={StaticResource StringToImageSourceConverter}}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Margin="15">
                     <Grid Margin="0 0 0 15">
@@ -152,6 +154,8 @@
                              Foreground="{StaticResource primaryColor}"
                              HorizontalAlignment="Center"
                                 Visibility="{Binding PriorityIsLoading, Converter={StaticResource boolToVisibility}}" />
+                    <TextBlock HorizontalAlignment="Center"
+    VerticalAlignment="Center" Style="{StaticResource MontsMedium16}" Foreground="{StaticResource secondIconColor}" Text="{Binding NoPrioritiesMessage}" Visibility="{Binding NoPrioritiesMessage, Converter={StaticResource StringToImageSourceConverter}}"/>
                 </StackPanel>
                 <!--<Button Grid.Column="1" Command="{Binding OpenAddTaskDialogCommand}" Style="{StaticResource addTaskButton}"/>-->
                 <GridSplitter Grid.Row="1" Grid.RowSpan="2" Width="Auto" Height="1"  Background="{StaticResource secondIconColor}" HorizontalAlignment="Stretch"/>

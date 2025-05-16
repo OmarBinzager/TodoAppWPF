@@ -35,7 +35,7 @@
                             Style="{DynamicResource header}" Text="{Binding headPart1}"/>
                     <TextBlock Style="{DynamicResource header}" Text="{Binding headPart2}"/>
                 </StackPanel>
-                <components:SearchBar Grid.Column="1"  Text="{Binding Text, Mode=TwoWay}" Margin="30,0">
+                <components:SearchBar SearchCommand="{Binding SearchCommand}" Grid.Column="1" Text="{Binding SearchedText, Mode=TwoWay}" Margin="30,0">
                     <components:SearchBar.Effect>
                         <DropShadowEffect Direction="270" ShadowDepth="4" BlurRadius="10" Opacity=".1"/>
                     </components:SearchBar.Effect>

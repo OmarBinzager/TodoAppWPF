@@ -228,7 +228,6 @@ namespace ToDoProject.ViewModel
 
             if (HasErrors) { IsLoading = false; return; }
             RegisterUser();
-            IsLoading = false;
         }
 
         public async System.Threading.Tasks.Task RegisterUser()
@@ -241,15 +240,13 @@ namespace ToDoProject.ViewModel
                 Email = Email,
                 Avatar = Avatar,
             };
-            bool result = await service.RegisterUser(user, Password);
+            IsLoading = true;
+            bool result = await service.RegisterUser(user, Password, ConfirmPassword);
+            IsLoading = false;
             if (result)
             {
 
                 NavigateToLoginPage();
-            }
-            else
-            {
-                MessageBox.Show("Email is used try another one!.", "Wrong Email", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         public void NavigateToLoginPage()

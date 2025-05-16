@@ -118,13 +118,16 @@ namespace ToDoProject.View.Components
             if (isNotCurrentStatus(1))
             {
                 ((Task)DataContext).Status = statuses.ToList()[1];
-                setStatusToTask(2);
+                ((Task)DataContext).CompletedAt = new DateTime();
+                setStatusToTask();
             }
         }
 
         private bool isCurrentStatus(int statusIndex)
         {
-            return ((Task)DataContext).Status == statuses.ToList()[statusIndex];
+            if (DataContext is Task)
+                return ((Task)DataContext).Status == statuses.ToList()[statusIndex];
+            else return false;
         }
 
         private bool isNotCurrentStatus(int statusIndex)
@@ -132,16 +135,11 @@ namespace ToDoProject.View.Components
             return !isCurrentStatus(statusIndex);
         }
 
-        private async System.Threading.Tasks.Task setStatusToTask(int statusId)
+        private async System.Threading.Tasks.Task setStatusToTask()
         {
             var service = DataServiceFactory.GetService();
-            var data = new Dictionary<string, object>() { { "status", statusId } };
-            if(statusId == 3)
-            {
-                data.Add("completed_at", DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));
-            }
-            var param = new Dictionary<string, object>() { { "id", Task.Id } };
-            await service.UpdateFeildAtTable("Task", data, "id = @id", param);
+            await service.UpdateTaskAsync((Task)DataContext);
+            //await service.UpdateFeildAtTable("Task", data, "id = @id", param);
             DeleteCommand?.Execute(null);
 
         }
@@ -151,7 +149,8 @@ namespace ToDoProject.View.Components
             if (isNotCurrentStatus(0))
             {
                 ((Task)DataContext).Status = statuses.ToList()[0];
-                setStatusToTask(1);
+                ((Task)DataContext).CompletedAt = new DateTime();
+                setStatusToTask();
             }
         }
 
@@ -160,7 +159,8 @@ namespace ToDoProject.View.Components
             if (isNotCurrentStatus(2))
             {
                 ((Task)DataContext).Status = statuses.ToList()[2];
-                setStatusToTask(3);
+                ((Task)DataContext).CompletedAt = DateTime.Now;
+                setStatusToTask();
             }
         }
 
