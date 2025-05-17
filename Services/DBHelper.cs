@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ToDoProject.Constant;
 
 namespace laibarysystemDB
 {
@@ -22,7 +23,7 @@ namespace laibarysystemDB
         private DBHelper()
         {
             // قراءة connection string من Settings
-            _connectionString = ToDoProject.Properties.Settings.Default.connStr;
+            _connectionString = SqlLink.connString;
         }
 
 

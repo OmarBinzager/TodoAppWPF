@@ -43,6 +43,9 @@ namespace ToDoProject.Services
         Task<bool> UpdateFeildAtTable(string table, Dictionary<string, object> data, string whereClause, Dictionary<string, object> whereParams);
         Task<User> Authenticate(string email, string password);
         Task<bool> RegisterUser(User user, string password, string passwordConfirm);
+        Task<bool> UpdateUser(User user);
+        Task<bool> ResetPassword(string oldPassword, string newPassword, string newPasswordConfirm);
+
         Task<bool> Logout();
 
     }

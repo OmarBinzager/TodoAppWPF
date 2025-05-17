@@ -13,6 +13,7 @@ using ToDoProject.Classes;
 using ToDoProject.Model;
 using ToDoProject.View;
 using Windows.Storage.Pickers.Provider;
+using Windows.System;
 
 namespace ToDoProject.Services
 {
@@ -175,6 +176,12 @@ namespace ToDoProject.Services
                 var parameter = new Dictionary<string, object>(){
                     { "id", id }
                 };
+                var task = db.Select("Task", "id = @id", parameter);
+                if(task.Rows.Count == 1)
+                {
+                    string image = task.Rows[0]["picture"].ToString();
+                    deleteImage(image);
+                }
                 int result = db.Delete("Task", "id = @id", parameter);
                 if (result > 0)
                     return true;
@@ -343,8 +350,9 @@ namespace ToDoProject.Services
         public string uploadImage(string path)
         {
             if (string.IsNullOrEmpty(path)) return "";
-            if (!File.Exists(path)) return "";
             string uploads = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads", Path.GetFileName(path));
+            if (File.Exists(uploads)) return path;
+            if (!File.Exists(path)) return "";
             string rootOfSavedImage = Path.GetFullPath(path);
             if (rootOfSavedImage == uploads) return Path.GetFileName(path);
             string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(path);
@@ -370,6 +378,15 @@ namespace ToDoProject.Services
                 MessageBox.Show(e.Message);
             }
             return uniqueFileName;
+        }
+
+        public void deleteImage(string fileName)
+        {
+            string fullImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads", Path.GetFileName(fileName));
+            if (File.Exists(fullImagePath))
+            {
+                File.Delete(fullImagePath);
+            }
         }
 
         public async Task<bool> UpdateCategoryAsync(Category category)
@@ -456,6 +473,15 @@ namespace ToDoProject.Services
                     { "created_at", task.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss") },
                     {"completed_at", task.CompletedAt == new DateTime() ? null : task.CompletedAt.ToString("yyyy-MM-dd hh:mm:ss") }
                 };
+
+                // delete old picture
+                var oldTask = db.Select("Task", $"id = {task.Id}");
+                if (oldTask.Rows.Count == 1)
+                {
+                    string image = oldTask.Rows[0]["picture"].ToString();
+                    if(task.Picture != image)
+                        deleteImage(image);
+                }
                 Dictionary<string, object> taskParams = new Dictionary<string, object>() {
                     { "id", task.Id },
                 };
@@ -521,7 +547,7 @@ namespace ToDoProject.Services
             return completedTasks;
         }
 
-        public async Task<User> Authenticate(string email, string password)
+        public async Task<Model.User> Authenticate(string email, string password)
         {
             return await System.Threading.Tasks.Task.Run(() =>
             {
@@ -532,7 +558,7 @@ namespace ToDoProject.Services
                 };
                 var userData = db.Select("\"User\"", "email = @email and password = @password", paramdic);
                 if (userData.Rows.Count != 1) return null;
-                User user = new User() { 
+                Model.User user = new Model.User() { 
                     Id = (int)userData.Rows[0]["id"],
                     Email = email,
                     FirstName = userData.Rows[0]["first_name"].ToString(),
@@ -543,7 +569,7 @@ namespace ToDoProject.Services
             });
         }
 
-        public async Task<bool> RegisterUser(User user, string password, string passwordConfirm)
+        public async Task<bool> RegisterUser(Model.User user, string password, string passwordConfirm)
         {
             return await System.Threading.Tasks.Task.Run(() =>
             {
@@ -565,7 +591,67 @@ namespace ToDoProject.Services
 
         public async Task<bool> Logout()
         {
-            return await System.Threading.Tasks.Task.Run(() => true);
+            return await System.Threading.Tasks.Task.Run(() => {
+                SessionService.Instance.Clear();
+                return true;
+            });
+        }
+
+        public async Task<bool> UpdateUser(Model.User user)
+        {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
+                user.Avatar = uploadImage(user.Avatar);
+                Dictionary<string, object> paramdic = new Dictionary<string, object>()
+                {
+                    {"email" , user.Email.Trim()},
+                    {"first_name",  user.FirstName.Trim()},
+                    {"last_name",  user.LastName.Trim()},
+                    {"avatar", user.Avatar }
+                };
+                var parameter = new Dictionary<string, object>(){
+                    { "id", user.Id }
+                };
+                var oldUser = db.Select("\"User\"", $"id = {user.Id}");
+                if (oldUser.Rows.Count == 1)
+                {
+                    string image = oldUser.Rows[0]["avatar"].ToString();
+                    if (user.Avatar != image)
+                        deleteImage(image);
+                }
+                var result = db.Update("\"User\"", paramdic, $"id = @id", parameter);
+                if (result != 1) return false;
+                SessionService.Instance.CurrentUser.FirstName = user.FirstName;
+                SessionService.Instance.CurrentUser.LastName = user.LastName;
+                SessionService.Instance.CurrentUser.Email = user.Email;
+                SessionService.Instance.CurrentUser.Avatar = user.Avatar;
+                if (AuthStorage.LoadUser() != null)
+                {
+                    AuthStorage.SaveUser(SessionService.Instance.CurrentUser);
+                }
+                return true;
+            });
+        }
+
+        public async Task<bool> ResetPassword(string oldPassword, string newPassword, string newPasswordConfirm)
+        {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
+                if (newPassword != newPasswordConfirm) return false;
+                Dictionary<string, object> paramdic = new Dictionary<string, object>()
+                {
+                    {"password" , newPassword},
+                };
+                var parameter = new Dictionary<string, object>(){
+                    { "id", SessionService.Instance.CurrentUser.Id },
+                    {"password" , oldPassword},
+                };
+                var isPasswordCurrect = db.Select("\"User\"", "id = @id and password = @password", parameter);
+                if (isPasswordCurrect.Rows.Count != 1) return false;
+                var result = db.Update("\"User\"", paramdic, "id = @id and password = @password", parameter);
+                if (result != 1) return false;
+                return true;
+            });
         }
     }
 }

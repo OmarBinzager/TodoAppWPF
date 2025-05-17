@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ToDoProject.Constant;
 
 namespace ToDoProject.Services
 {
@@ -11,8 +12,7 @@ namespace ToDoProject.Services
     {
         public static IDataService GetService()
         {
-            var backend = Properties.Settings.Default.Backend;
-            if (backend == "sql")
+            if (DataSwitcher.dataType == DatabaseType.sql)
             {
                 return new SqlServerDataService();
             }

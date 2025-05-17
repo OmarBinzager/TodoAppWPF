@@ -88,6 +88,8 @@ namespace ToDoProject.Constant
         public readonly static string login = $"{authlink}/login";
         public readonly static string logout = $"{authlink}/logout";
         public readonly static string register = $"{authlink}/register";
+        public readonly static string editUser = $"{authlink}/edit";
+        public readonly static string resetPassword = $"{authlink}/reset-password";
         #endregion
 
 

@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ToDoProject.View.Components"
-             mc:Ignorable="d" d:DesignWidth="400"
+             mc:Ignorable="d" d:DesignWidth="400" x:Name="uc"
              d:DesignHeight="64">
-    <Grid x:Name="mainGrid">
+    <Grid x:Name="mainGrid" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="27"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock x:Name="title" VerticalAlignment="Top"  Style="{StaticResource MontsSemiBold14}"/>
-        <local:CustomTextBox x:Name="textBox" Grid.Row="1" TextChanged="TextBox_TextChanged" MaxWidth="{Binding ElementName=mainGrid, Path=Width}"/>
+        <local:CustomTextBox x:Name="textBox" Background="Transparent" Grid.Row="1" TextChanged="TextBox_TextChanged" MaxWidth="{Binding ElementName=mainGrid, Path=Width}"/>
     </Grid>
 </UserControl>

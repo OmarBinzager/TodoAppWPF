@@ -32,8 +32,8 @@
                         <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource MontsSemiBold16}" HorizontalAlignment="Left" Text="Search" Margin="0,0,0,2"/>
-                        <Border Width="50" HorizontalAlignment="Left" Height="2" Background="{StaticResource orangeColor}" CornerRadius="1"/>
+                        <TextBlock Style="{StaticResource InterSemiBold24}" HorizontalAlignment="Left" Text="Search" Margin="0,0,0,2"/>
+                        <Border Width="80" HorizontalAlignment="Left" Height="2" Background="{StaticResource orangeColor}" CornerRadius="1"/>
                     </StackPanel>
                 </Grid>
                 <ListBox ItemsSource="{Binding Tasks}" HorizontalAlignment="Center" Grid.Row="2"

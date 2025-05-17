@@ -68,6 +68,7 @@
     <Compile Include="Classes\Priority.cs" />
     <Compile Include="Classes\Status.cs" />
     <Compile Include="Classes\Step.cs" />
+    <Compile Include="Classes\StorageType.cs" />
     <Compile Include="Classes\TaskGroup.cs" />
     <Compile Include="Classes\UrlBuilder.cs" />
     <Compile Include="Constant\ApiLinks.cs" />
@@ -78,7 +79,9 @@
     <Compile Include="Constant\Converters\StringToGeomertyConverter.cs" />
     <Compile Include="Constant\Converters\StringToImageSourceConverter.cs" />
     <Compile Include="Constant\Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="Constant\DataSwitcher.cs" />
     <Compile Include="Constant\Icons.cs" />
+    <Compile Include="Constant\SqlLink.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Model\User.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="ViewModel\PriorityDialogViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\TasksViewModel.cs" />
+    <Compile Include="ViewModel\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModel\UserProfileViewModel.cs" />
     <Compile Include="View\Categories.xaml.cs">
       <DependentUpon>Categories.xaml</DependentUpon>
@@ -169,6 +173,9 @@
     </Compile>
     <Compile Include="View\Tasks.xaml.cs">
       <DependentUpon>Tasks.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ResetPasswordView.xaml.cs">
+      <DependentUpon>ResetPasswordView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserProfile.xaml.cs">
       <DependentUpon>UserProfile.xaml</DependentUpon>
@@ -288,6 +295,10 @@
     <Page Include="View\Tasks.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ResetPasswordView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\UserProfile.xaml">
       <SubType>Designer</SubType>

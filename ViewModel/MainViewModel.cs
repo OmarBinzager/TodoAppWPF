@@ -190,7 +190,8 @@ namespace ToDoProject.ViewModel
         public void Logout()
         {
             // Clear user session
-            SessionService.Instance.Clear();
+            var service = DataServiceFactory.GetService();
+            service.Logout();
 
             // Optionally, clear the user data from storage (e.g., file)
             AuthStorage.ClearUser();

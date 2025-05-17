@@ -200,6 +200,8 @@ namespace ToDoProject.ViewModel
                 }
                 else
                 {
+                    NoCompletedTasksMessage = "There aren't any completed tasks yet.";
+                    NoLatestTasksMessage = "There aren't any tasks yet, add new task by + button above.";
                 }
             }else
             {

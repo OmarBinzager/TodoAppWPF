@@ -21,6 +21,7 @@ using ToDoProject.View;
 using System.Windows;
 using Windows.System;
 using Windows.ApplicationModel.UserDataTasks;
+using Windows.Networking;
 
 namespace ToDoProject.Services
 {
@@ -690,11 +691,11 @@ namespace ToDoProject.Services
                 string responseBody = await response.Content.ReadAsStringAsync();
                 JsonDocument doc = JsonDocument.Parse(responseBody);
                 JsonElement data = doc.RootElement;
-                var userObj = JsonSerializer.Deserialize<Dictionary<string, object>>(data.GetProperty("user"));
                 string message = data.GetProperty("message").ToString();
-                var token = data.GetProperty("token");
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
+                    var userObj = JsonSerializer.Deserialize<Dictionary<string, object>>(data.GetProperty("user"));
+                    var token = data.GetProperty("token");
                     var user = new Model.User()
                     {
                         Id = int.Parse(userObj["id"].ToString()),
@@ -721,15 +722,15 @@ namespace ToDoProject.Services
         {
             try
             {
-                var userObj = new Dictionary<string, string>()
-                {
-                    { "first_name", user.FirstName },
-                    { "last_name", user.LastName },
-                    { "email", user.Email },
-                    { "password", password },
-                    { "password_confirmation", passwordConfirm }
-                };
-                var json = JsonSerializer.Serialize(userObj);
+                //var userObj = new Dictionary<string, string>()
+                //{
+                //    { "first_name", user.FirstName },
+                //    { "last_name", user.LastName },
+                //    { "email", user.Email },
+                //    { "password", password },
+                //    { "password_confirmation", passwordConfirm }
+                //};
+                //var json = JsonSerializer.Serialize(userObj);
                 var content = new MultipartFormDataContent();
                 //content.Add(new StringContent(json, Encoding.UTF8, "application/json")) ;
                 content.Add(new StringContent(user.FirstName), "first_name");
@@ -737,7 +738,7 @@ namespace ToDoProject.Services
                 content.Add(new StringContent(user.Email), "email");
                 content.Add(new StringContent(password), "password");
                 content.Add(new StringContent(passwordConfirm), "password_confirmation");
-                if (string.IsNullOrEmpty(user.Avatar)) {
+                if (!string.IsNullOrEmpty(user.Avatar) && File.Exists(user.Avatar)) {
                     var fileStream = File.OpenRead(user.Avatar);
                     var fileContent = new StreamContent(fileStream);
                     fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
@@ -778,6 +779,7 @@ namespace ToDoProject.Services
                 var responseObj = JsonSerializer.Deserialize<Dictionary<string, object>>(responseBody);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
+                    SessionService.Instance.Clear();
                     return true;
                 }
                 else
@@ -789,6 +791,81 @@ namespace ToDoProject.Services
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+        }
+        public async Task<bool> UpdateUser(Model.User user)
+        {
+            try
+            {
+                
+                var content = new MultipartFormDataContent();
+                content.Add(new StringContent(user.FirstName), "first_name");
+                content.Add(new StringContent(user.LastName), "last_name");
+                content.Add(new StringContent(user.Email), "email");
+                if (!string.IsNullOrEmpty(user.Avatar) && File.Exists(user.Avatar))
+                {
+                    var fileStream = File.OpenRead(user.Avatar);
+                    var fileContent = new StreamContent(fileStream);
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+
+                    content.Add(fileContent, "avatar", Path.GetFileName(user.Avatar));
+                }
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.PostAsync(ApiLink.editUser, content);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                JsonDocument doc = JsonDocument.Parse(responseBody);
+                JsonElement data = doc.RootElement;
+                string message = data.GetProperty("message").ToString();
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var userObj = JsonSerializer.Deserialize<Dictionary<string, object>>(data.GetProperty("user"));
+                    SessionService.Instance.CurrentUser.FirstName = userObj["first_name"].ToString();
+                    SessionService.Instance.CurrentUser.LastName = userObj["last_name"].ToString();
+                    SessionService.Instance.CurrentUser.Email = userObj["email"].ToString();
+                    SessionService.Instance.CurrentUser.Avatar = userObj["avatar"] is null ? "" : $"{ApiLink.storage}/{userObj["avatar"].ToString()}";
+                    if (AuthStorage.LoadUser() != null)
+                    {
+                        AuthStorage.SaveUser(SessionService.Instance.CurrentUser);
+                    }
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> ResetPassword(string oldPassword, string newPassword, string newPasswordConfirm)
+        {
+            try
+            {
+                var content = new MultipartFormDataContent();
+                content.Add(new StringContent(oldPassword), "current_password");
+                content.Add(new StringContent(newPassword), "password");
+                content.Add(new StringContent(newPasswordConfirm), "password_confirmation");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.PostAsync(ApiLink.resetPassword, content);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var responseObj = JsonSerializer.Deserialize<Dictionary<string, object>>(responseBody);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show(responseObj["message"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
                 return false;
             }
         }
@@ -926,8 +1003,6 @@ namespace ToDoProject.Services
         {
             throw new NotImplementedException();
         }
-
-
 
     }
 }
