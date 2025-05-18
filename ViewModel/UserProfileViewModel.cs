@@ -145,7 +145,10 @@ namespace ToDoProject.ViewModel
             {
                 MessageBox.Show("Information changed successfully", "Success", MessageBoxButton.OK, MessageBoxImage.None);
                 reload();
-                MainViewModel.Instance.Avatar = string.IsNullOrEmpty(Avatar) ? "pack://application:,,,/Assets/default-user.jpg" : Avatar.Contains(ApiLink.storage) ? Avatar : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads/" + Avatar);
+                MainViewModel.Instance.Avatar = string.IsNullOrEmpty(Avatar) ? 
+                    "pack://application:,,,/Assets/default-user.jpg" : 
+                    Avatar.Contains(ApiLink.storage) ? Avatar : 
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads/" + Avatar);
                 MainViewModel.Instance.Username = Username;
                 MainViewModel.Instance.Email = UserEmail;
             }

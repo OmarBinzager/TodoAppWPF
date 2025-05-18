@@ -6,6 +6,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
@@ -176,12 +177,12 @@ namespace ToDoProject.Services
                 var parameter = new Dictionary<string, object>(){
                     { "id", id }
                 };
-                var task = db.Select("Task", "id = @id", parameter);
-                if(task.Rows.Count == 1)
-                {
-                    string image = task.Rows[0]["picture"].ToString();
-                    deleteImage(image);
-                }
+                //var task = db.Select("Task", "id = @id", parameter);
+                //if(task.Rows.Count == 1)
+                //{
+                //    string image = task.Rows[0]["picture"].ToString();
+                //    deleteImage(image);
+                //}
                 int result = db.Delete("Task", "id = @id", parameter);
                 if (result > 0)
                     return true;
@@ -474,14 +475,14 @@ namespace ToDoProject.Services
                     {"completed_at", task.CompletedAt == new DateTime() ? null : task.CompletedAt.ToString("yyyy-MM-dd hh:mm:ss") }
                 };
 
-                // delete old picture
-                var oldTask = db.Select("Task", $"id = {task.Id}");
-                if (oldTask.Rows.Count == 1)
-                {
-                    string image = oldTask.Rows[0]["picture"].ToString();
-                    if(task.Picture != image)
-                        deleteImage(image);
-                }
+                //// delete old picture
+                //var oldTask = db.Select("Task", $"id = {task.Id}");
+                //if (oldTask.Rows.Count == 1)
+                //{
+                //    string image = oldTask.Rows[0]["picture"].ToString();
+                //    if(task.Picture != image)
+                //        deleteImage(image);
+                //}
                 Dictionary<string, object> taskParams = new Dictionary<string, object>() {
                     { "id", task.Id },
                 };
@@ -612,13 +613,13 @@ namespace ToDoProject.Services
                 var parameter = new Dictionary<string, object>(){
                     { "id", user.Id }
                 };
-                var oldUser = db.Select("\"User\"", $"id = {user.Id}");
-                if (oldUser.Rows.Count == 1)
-                {
-                    string image = oldUser.Rows[0]["avatar"].ToString();
-                    if (user.Avatar != image)
-                        deleteImage(image);
-                }
+                //var oldUser = db.Select("\"User\"", $"id = {user.Id}");
+                //if (oldUser.Rows.Count == 1)
+                //{
+                //    string image = oldUser.Rows[0]["avatar"].ToString();
+                //    if (user.Avatar != image)
+                //        deleteImage(image);
+                //}
                 var result = db.Update("\"User\"", paramdic, $"id = @id", parameter);
                 if (result != 1) return false;
                 SessionService.Instance.CurrentUser.FirstName = user.FirstName;
