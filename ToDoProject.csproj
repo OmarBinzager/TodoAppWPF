@@ -342,6 +342,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\alarm.svg" />
+    <Content Include="todo.sql" />
     <Resource Include="Assets\google.png" />
     <Resource Include="Assets\x.png" />
     <Resource Include="Assets\auth-background.png" />

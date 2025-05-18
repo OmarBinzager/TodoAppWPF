@@ -745,6 +745,7 @@ namespace ToDoProject.Services
 
                     content.Add(fileContent, "avatar", Path.GetFileName(user.Avatar));
                 }
+
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await client.PostAsync(ApiLink.register, content);
                 string responseBody = await response.Content.ReadAsStringAsync();
