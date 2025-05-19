@@ -1,4 +1,5 @@
-﻿using System;
+﻿using laibarysystemDB;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -26,7 +27,7 @@ namespace ToDoProject
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            if (!DatabaseExists())
+            if (!DBHelper.DatabaseExists())
             {
                 CreateDatabase();
                 AuthStorage.ClearUser();
@@ -73,17 +74,7 @@ namespace ToDoProject
         //    Console.WriteLine(res);
         //}
 
-        bool DatabaseExists()
-        {
-            using (var connection = new SqlConnection(SqlLink.masterConnString))
-            {
-                connection.Open();
-                var command = new SqlCommand(
-                    $"SELECT database_id FROM sys.databases WHERE Name = @databaseName", connection);
-                command.Parameters.AddWithValue("@databaseName", SqlLink.dbName);
-                return command.ExecuteScalar() != null;
-            }
-        }
+        
 
         async void CreateDatabase()
         {

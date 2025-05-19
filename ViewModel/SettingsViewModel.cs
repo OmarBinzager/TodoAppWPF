@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using laibarysystemDB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -65,8 +66,15 @@ namespace ToDoProject.ViewModel
                 if(!(await api.IsServerConnected()))
                 {
                     MessageBox.Show("Remote Server is not connected.", "Error");
+                    SelectedIndex = 0;
                     return;
                 }
+            }
+            if(SelectedType.Type == DatabaseType.sql && !DBHelper.DatabaseExists())
+            {
+                MessageBox.Show("Local Server is not connected.", "Error");
+                SelectedIndex = 1;
+                return;
             }
             MainViewModel.Instance.Logout();
             if(SelectedType.Type == DatabaseType.sql) DataSwitcher.SwitchToSql(SelectedType);
@@ -75,6 +83,7 @@ namespace ToDoProject.ViewModel
 
         public void TypeSelected()
         {
+            if (DataSwitcher.dataType == SelectedType.Type) return;
             SelectType();
         }
 

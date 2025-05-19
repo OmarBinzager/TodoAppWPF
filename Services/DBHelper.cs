@@ -71,6 +71,25 @@ namespace laibarysystemDB
             return ExecuteNonQuery(query, allParams);
         }
 
+        public static bool DatabaseExists()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(SqlLink.masterConnString))
+                {
+                    connection.Open();
+                    var command = new SqlCommand(
+                        $"SELECT database_id FROM sys.databases WHERE Name = @databaseName", connection);
+                    command.Parameters.AddWithValue("@databaseName", SqlLink.dbName);
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public int Delete(string tableName, string whereClause, Dictionary<string, object> parameters)
         {
             var query = $"DELETE FROM {tableName} WHERE {whereClause}";

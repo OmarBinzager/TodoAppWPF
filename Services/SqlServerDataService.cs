@@ -22,6 +22,8 @@ namespace ToDoProject.Services
     {
 
         private DBHelper db = DBHelper.Instance;
+
+
         public async Task<bool> AddCategoryAsync(Category category)
         {
             return await System.Threading.Tasks.Task.Run(() =>
