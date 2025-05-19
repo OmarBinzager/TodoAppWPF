@@ -15,6 +15,7 @@ namespace ToDoProject.Constant
         public const string port = "8000";
         public readonly static string serverWeblink = $"http://{server}:{port}";
         public readonly static string serverlink = $"http://{server}:{port}/api";
+        public readonly static string health = $"{serverlink}/health";
 
         #region Task API Links
         // Task

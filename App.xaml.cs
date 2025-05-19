@@ -29,18 +29,19 @@ namespace ToDoProject
             if (!DatabaseExists())
             {
                 CreateDatabase();
-                DataSwitcher.SwitchToSql(new StorageType() { Name = "Local", Type = DatabaseType.sql });
+                AuthStorage.ClearUser();
                 ShowLoginWindow();
-            }
-            var user = AuthStorage.LoadUser();
-            if (user != null)
-            {
-                SessionService.Instance.SetUser(user);
-                ShowMainWindow();
-            }
-            else
-            {
-                ShowLoginWindow();
+            }else { 
+                var user = AuthStorage.LoadUser();
+                if (user != null)
+                {
+                    SessionService.Instance.SetUser(user);
+                    ShowMainWindow();
+                }
+                else
+                {
+                    ShowLoginWindow();
+                }
             }
             //addnewTask();
         }
@@ -84,24 +85,40 @@ namespace ToDoProject
             }
         }
 
-        void CreateDatabase()
+        async void CreateDatabase()
         {
-            string script = File.ReadAllText("../../todo.sql");
-            script = script.Replace("TodoDB2", SqlLink.dbName);
-            string[] commands = Regex.Split(script, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-            using (SqlConnection connection = new SqlConnection(SqlLink.masterConnString))
+            try
             {
-                connection.Open();
-                foreach (string commandText in commands)
+                string script = File.ReadAllText("../../todo.sql");
+                script = script.Replace("TodoDB2", SqlLink.dbName);
+                string[] commands = Regex.Split(script, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+                using (SqlConnection connection = new SqlConnection(SqlLink.masterConnString))
                 {
-                    if (string.IsNullOrWhiteSpace(commandText))
-                        continue;
-
-                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    connection.Open();
+                    foreach (string commandText in commands)
                     {
-                        command.ExecuteNonQuery();
+                        if (string.IsNullOrWhiteSpace(commandText))
+                            continue;
+
+                        using (SqlCommand command = new SqlCommand(commandText, connection))
+                        {
+                            command.ExecuteNonQuery();
+                        }
                     }
                 }
+                DataSwitcher.SwitchToSql(new StorageType() { Name = "Local", Type = DatabaseType.sql });
+            }
+            catch (Exception e)
+            {
+                if(await (new LaravelApiService()).IsServerConnected())
+                {
+                    DataSwitcher.SwitchToApi(new StorageType() { Name = "Remote", Type = DatabaseType.api });
+                }else
+                {
+                    MessageBox.Show("No Data Storage are connected application will shutting down!.", "Error");
+                    Application.Current.Shutdown();
+                }
+
             }
 
         }

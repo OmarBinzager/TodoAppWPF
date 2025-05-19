@@ -1000,9 +1000,29 @@ namespace ToDoProject.Services
 
 
 
-        public Task<bool> UpdateFeildAtTable(string table, Dictionary<string, object> data, string whereClause, Dictionary<string, object> whereParams)
+        public  Task<bool> UpdateFeildAtTable(string table, Dictionary<string, object> data, string whereClause, Dictionary<string, object> whereParams)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> IsServerConnected()
+        {
+            try
+            {
+                var response = await client.GetAsync(ApiLink.health);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
     }
