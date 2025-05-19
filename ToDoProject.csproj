@@ -36,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="netstandard" />
     <Reference Include="System" />
@@ -329,6 +332,7 @@
     <Resource Include="Fonts\Inter\Inter_18pt-Bold.ttf" />
     <Resource Include="Fonts\Inter\Inter_18pt-Medium.ttf" />
     <Resource Include="Fonts\Inter\Inter_18pt-Regular.ttf" />
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

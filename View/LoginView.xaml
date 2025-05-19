@@ -6,23 +6,25 @@
       xmlns:vm="clr-namespace:ToDoProject.ViewModel"
       xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:local="clr-namespace:ToDoProject.View" xmlns:components="clr-namespace:ToDoProject.View.Components" xmlns:behaviors="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:modern="http://schemas.modernwpf.com/2019"
-      mc:Ignorable="d"  Width="1236" Height="767"
+      mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
+  SnapsToDevicePixels="True"
       Title="LoginView">
     <Page.DataContext>
         <vm:LoginViewModel/>
     </Page.DataContext>
     <Grid>
-        <Border Style="{StaticResource bordedContainer}" CornerRadius="10" BorderThickness="0">
+        <Border Style="{StaticResource bordedContainer}" CornerRadius="10" BorderThickness="0" Padding="10">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="1.5*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
-                <StackPanel Margin="50 0 0 0" VerticalAlignment="Center" Grid.RowSpan="2"><TextBlock Text="Sign In" Style="{StaticResource MontsBold36}" Margin="0 0 0 25"/>
+                <ScrollViewer Grid.RowSpan="2">
+                <StackPanel Margin="50 0 0 0" VerticalAlignment="Center"><TextBlock Text="Sign In" Style="{StaticResource MontsBold36}" Margin="0 0 0 25"/>
                     <components:AuthTextBox ErrorText="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"
                                             ErrorTextVisibility="{Binding (Validation.HasError), RelativeSource={RelativeSource Self}}" 
                                             Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HintText="Enter Email" Margin="0 0 0 25" IconData="M25 5H5C3.625 5 2.5125 6.125 2.5125 7.5L2.5 22.5C2.5 23.875 3.625 25 5 25H25C26.375 25 27.5 23.875 27.5 22.5V7.5C27.5 6.125 26.375 5 25 5ZM25 10L15 16.25L5 10V7.5L15 13.75L25 7.5V10Z"/>
@@ -56,9 +58,19 @@
                             </behavior:Interaction.Triggers>
                         </TextBlock>
                     </StackPanel>
+                    
                     <!--<Button Style="{StaticResource AuthActionButton}" Content="Login" Command="{Binding LoginCommand}"/>-->
                 </StackPanel>
-                <Image Grid.Column="1" Grid.Row="1" Source="/Assets/login.png"/>
+                </ScrollViewer>
+                <Grid Grid.Column="1" Grid.Row="1">
+                <Border>
+                    <Border.Background>
+                        <ImageBrush ImageSource="/Assets/login.png"/>
+                    </Border.Background>
+                    
+                    <!--<Image Stretch="Uniform" Source="/Assets/login.png"/>-->
+                    </Border>
+                </Grid>
             </Grid>
         </Border>
     </Grid>

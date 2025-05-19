@@ -30,6 +30,7 @@ namespace ToDoProject
             {
                 CreateDatabase();
                 DataSwitcher.SwitchToSql(new StorageType() { Name = "Local", Type = DatabaseType.sql });
+                ShowLoginWindow();
             }
             var user = AuthStorage.LoadUser();
             if (user != null)
@@ -85,7 +86,8 @@ namespace ToDoProject
 
         void CreateDatabase()
         {
-            string script = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "todo.sql"));
+            string script = File.ReadAllText("../../todo.sql");
+            script = script.Replace("TodoDB2", SqlLink.dbName);
             string[] commands = Regex.Split(script, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
             using (SqlConnection connection = new SqlConnection(SqlLink.masterConnString))
             {

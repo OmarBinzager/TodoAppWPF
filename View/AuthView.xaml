@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoProject.View"
-        ResizeMode="NoResize"
+         MinWidth="800" MinHeight="600"
+  SizeToContent="WidthAndHeight"
+  UseLayoutRounding="True"
+  SnapsToDevicePixels="True"
         mc:Ignorable="d"
-        Title="Registration"  MinWidth="1350" MinHeight="900" WindowStartupLocation="CenterScreen">
+        Title="Registration" WindowStartupLocation="CenterScreen">
     <Grid>
         <Border>
             <Border.Background>
@@ -21,12 +24,12 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="12*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="12*"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Frame Grid.Row="1" Content="{Binding CurrentPage}" x:Name="AuthFrame" NavigationUIVisibility="Hidden" Grid.Column="1" MinHeight="300" MinWidth="400"/>

@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ToDoProject.View" xmlns:components="clr-namespace:ToDoProject.View.Components" xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
-      mc:Ignorable="d"   Width="1236" Height="767" 
+      mc:Ignorable="d"
       xmlns:vm="clr-namespace:ToDoProject.ViewModel" xmlns:modern="http://schemas.modernwpf.com/2019"
       d:DesignHeight="767" d:DesignWidth="1400"
       Title="Register Page">
