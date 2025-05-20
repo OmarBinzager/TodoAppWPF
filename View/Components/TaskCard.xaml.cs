@@ -117,9 +117,12 @@ namespace ToDoProject.View.Components
 
             if (isNotCurrentStatus(1))
             {
-                ((Task)DataContext).Status = statuses.ToList()[1];
-                ((Task)DataContext).CompletedAt = new DateTime();
-                setStatusToTask();
+                if (DataContext is Task)
+                {
+                    ((Task)DataContext).Status = statuses.ToList()[1];
+                    ((Task)DataContext).CompletedAt = new DateTime();
+                    setStatusToTask();
+                }
             }
         }
 
@@ -148,9 +151,12 @@ namespace ToDoProject.View.Components
         {
             if (isNotCurrentStatus(0))
             {
-                ((Task)DataContext).Status = statuses.ToList()[0];
-                ((Task)DataContext).CompletedAt = new DateTime();
-                setStatusToTask();
+                if(DataContext is Task)
+                {
+                    ((Task)DataContext).Status = statuses.ToList()[0];
+                    ((Task)DataContext).CompletedAt = new DateTime();
+                    setStatusToTask();
+                }
             }
         }
 
@@ -158,9 +164,12 @@ namespace ToDoProject.View.Components
         {
             if (isNotCurrentStatus(2))
             {
-                ((Task)DataContext).Status = statuses.ToList()[2];
-                ((Task)DataContext).CompletedAt = DateTime.Now;
-                setStatusToTask();
+                if (DataContext is Task)
+                {
+                    ((Task)DataContext).Status = statuses.ToList()[2];
+                    ((Task)DataContext).CompletedAt = DateTime.Now;
+                    setStatusToTask();
+                }
             }
         }
 

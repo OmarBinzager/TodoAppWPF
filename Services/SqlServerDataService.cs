@@ -464,19 +464,18 @@ namespace ToDoProject.Services
         {
             return await System.Threading.Tasks.Task.Run(async () =>
             {
-                task.Picture = uploadImage(task.Picture);
-                Dictionary<string, object> taskDic = new Dictionary<string, object>() {
-                    { "title", task.Title },
-                    { "description", task.Description },
-                    { "picture", task.Picture },
-                    { "category", task.Category.Id },
-                    { "status", task.Status.Id },
-                    { "priority", task.Priority.Id },
-                    { "due_date", task.DueDate.ToString("yyyy-MM-dd") },
-                    { "created_at", task.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss") },
-                    {"completed_at", task.CompletedAt == new DateTime() ? null : task.CompletedAt.ToString("yyyy-MM-dd hh:mm:ss") }
-                };
-
+            task.Picture = uploadImage(task.Picture);
+            Dictionary<string, object> taskDic = new Dictionary<string, object>() {
+                { "title", task.Title },
+                { "description", task.Description },
+                { "picture", task.Picture },
+                { "status", task.Status.Id },
+                { "due_date", task.DueDate.ToString("yyyy-MM-dd") },
+                { "created_at", task.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss") },
+                { "completed_at", task.CompletedAt == new DateTime() ? null : task.CompletedAt.ToString("yyyy-MM-dd hh:mm:ss") }
+            };
+                if (task.Category.Name != null) taskDic.Add("category", task.Category.Id);
+                if (task.Priority.Name != null) taskDic.Add("priority", task.Priority.Id);
                 //// delete old picture
                 //var oldTask = db.Select("Task", $"id = {task.Id}");
                 //if (oldTask.Rows.Count == 1)
